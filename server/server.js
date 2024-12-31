@@ -23,19 +23,23 @@ const startServer = async () => {
     const corsOptions = {
       origin: function (origin, callback) {
         console.log("Incoming request origin:", origin);
-
+        
         const allowedOrigins = [
           "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
           "http://localhost:5174",
+          "https://dental-funnel-app.onrender.com",
           undefined,
         ];
 
-        if (allowedOrigins.includes(origin)) {
-          callback(null, true);
-        } else {
-          console.log("Blocked origin:", origin);
-          callback(null, true); // Temporarily allow all origins for debugging
-        }
+        // Allow all origins during development/debugging
+        callback(null, true);
+
+        // Log the request for debugging
+        console.log({
+          allowedOrigins,
+          requestOrigin: origin,
+          isAllowed: allowedOrigins.includes(origin),
+        });
       },
       credentials: true,
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
