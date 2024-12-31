@@ -7,4 +7,9 @@ services:
     startCommand: npm start
     envVars:
       - key: NODE_ENV
-        value: production 
+        value: production
+      - key: PORT
+        value: "5000"
+    routes:
+      - type: web
+        path: /api 

@@ -22,10 +22,11 @@ const startServer = async () => {
     // CORS configuration
     const corsOptions = {
       origin: function (origin, callback) {
+        console.log("Incoming request origin:", origin);
+
         const allowedOrigins = [
           "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
           "http://localhost:5174",
-          // Add this for Render's health checks
           undefined,
         ];
 
@@ -48,23 +49,31 @@ const startServer = async () => {
       optionsSuccessStatus: 204,
     };
 
-    // Move CORS middleware before other middleware
+    // Apply CORS middleware first
     app.use(cors(corsOptions));
     app.use(express.json());
 
-    // Add CORS debugging middleware
+    // Add request logging middleware
     app.use((req, res, next) => {
       console.log({
+        timestamp: new Date().toISOString(),
         url: req.url,
         method: req.method,
         origin: req.headers.origin,
         host: req.headers.host,
         referer: req.headers.referer,
+        path: req.path,
+        headers: req.headers,
       });
       next();
     });
 
-    // Routes
+    // Health check route
+    app.get("/", (req, res) => {
+      res.json({ status: "ok", message: "API is running" });
+    });
+
+    // API routes
     app.use(
       "/api/appointments",
       (await import("./routes/appointments.js")).default
@@ -80,9 +89,9 @@ const startServer = async () => {
 
     const PORT = process.env.PORT || 5000;
 
-    // Start server
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      console.log("Environment:", process.env.NODE_ENV);
       console.log("CORS enabled for:", corsOptions.origin);
     });
 
