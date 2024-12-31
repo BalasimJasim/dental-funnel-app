@@ -22,41 +22,49 @@ const startServer = async () => {
     // Basic middleware
     app.use(express.json());
 
-    // CORS middleware
+    // CORS configuration
+    const corsOptions = {
+      origin: function (origin, callback) {
+        const allowedOrigins = [
+          "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
+          "http://localhost:5174",
+        ];
+
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) {
+          return callback(null, true);
+        }
+
+        if (allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          console.log("Blocked origin:", origin);
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Accept",
+      ],
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    };
+
+    // Enable pre-flight requests for all routes
+    app.options("*", cors(corsOptions));
+
+    // Apply CORS to all routes
+    app.use(cors(corsOptions));
+
+    // Add CORS debugging middleware
     app.use((req, res, next) => {
-      // Allow specific origins
-      const allowedOrigins = [
-        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
-        "http://localhost:5174",
-      ];
-      const origin = req.headers.origin;
-
-      if (allowedOrigins.includes(origin)) {
-        res.header("Access-Control-Allow-Origin", origin);
-      }
-
-      // Request headers you wish to allow
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-      );
-
-      // Request methods you wish to allow
-      res.header(
-        "Access-Control-Allow-Methods",
-        "GET, POST, PUT, DELETE, OPTIONS"
-      );
-
-      // Set to true if you need the website to include cookies in the requests
-      res.header("Access-Control-Allow-Credentials", "true");
-
-      // Handle preflight
-      if (req.method === "OPTIONS") {
-        res.header("Access-Control-Max-Age", "86400");
-        res.sendStatus(200);
-        return;
-      }
-
+      console.log("Request Headers:", req.headers);
+      console.log("Origin:", req.headers.origin);
+      console.log("Method:", req.method);
       next();
     });
 
@@ -79,6 +87,7 @@ const startServer = async () => {
     // Start server
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      console.log("CORS enabled for:", corsOptions.origin);
     });
 
     // Handle unhandled promise rejections
