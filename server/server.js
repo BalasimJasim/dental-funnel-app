@@ -23,7 +23,7 @@ const startServer = async () => {
     const corsOptions = {
       origin: function (origin, callback) {
         console.log("Incoming request origin:", origin);
-        
+
         const allowedOrigins = [
           "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
           "http://localhost:5174",
@@ -31,14 +31,21 @@ const startServer = async () => {
           undefined,
         ];
 
-        // Allow all origins during development/debugging
-        callback(null, true);
+        // For development and debugging, allow all origins
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          console.log("Blocked origin:", origin);
+          // For now, still allow all origins but log it
+          callback(null, true);
+        }
 
         // Log the request for debugging
         console.log({
+          timestamp: new Date().toISOString(),
           allowedOrigins,
           requestOrigin: origin,
-          isAllowed: allowedOrigins.includes(origin),
+          isAllowed: !origin || allowedOrigins.includes(origin),
         });
       },
       credentials: true,
@@ -48,17 +55,31 @@ const startServer = async () => {
         "Authorization",
         "X-Requested-With",
         "Accept",
+        "Origin",
       ],
+      exposedHeaders: ["Content-Length", "X-Requested-With"],
       preflightContinue: false,
       optionsSuccessStatus: 204,
+      maxAge: 86400,
     };
 
     // Apply CORS middleware first
     app.use(cors(corsOptions));
+
+    // Basic middleware
     app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
     // Add request logging middleware
     app.use((req, res, next) => {
+      // Add CORS headers for all responses
+      res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+      res.header("Access-Control-Allow-Credentials", "true");
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+      );
+
       console.log({
         timestamp: new Date().toISOString(),
         url: req.url,
