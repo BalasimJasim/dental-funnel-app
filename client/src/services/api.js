@@ -6,8 +6,9 @@ const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    Accept: "application/json",
   },
-  withCredentials: false,
+  withCredentials: true,
 });
 
 export const appointmentService = {
@@ -23,19 +24,8 @@ export const appointmentService = {
 
   async bookAppointment(appointmentData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/appointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(appointmentData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
+      const response = await api.post("/appointments", appointmentData);
+      return response.data;
     } catch (error) {
       console.error("API Error:", error);
       throw error;

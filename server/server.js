@@ -19,32 +19,46 @@ const startServer = async () => {
 
     const app = express();
 
-    // Enable CORS for all requests
+    // Basic middleware
+    app.use(express.json());
+
+    // CORS middleware
     app.use((req, res, next) => {
-      res.setHeader(
-        "Access-Control-Allow-Origin",
-        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app"
+      // Allow specific origins
+      const allowedOrigins = [
+        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
+        "http://localhost:5174",
+      ];
+      const origin = req.headers.origin;
+
+      if (allowedOrigins.includes(origin)) {
+        res.header("Access-Control-Allow-Origin", origin);
+      }
+
+      // Request headers you wish to allow
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
       );
-      res.setHeader(
+
+      // Request methods you wish to allow
+      res.header(
         "Access-Control-Allow-Methods",
         "GET, POST, PUT, DELETE, OPTIONS"
       );
-      res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Content-Type, Authorization"
-      );
-      res.setHeader("Access-Control-Allow-Credentials", "true");
 
-      // Handle preflight requests
+      // Set to true if you need the website to include cookies in the requests
+      res.header("Access-Control-Allow-Credentials", "true");
+
+      // Handle preflight
       if (req.method === "OPTIONS") {
-        return res.status(200).end();
+        res.header("Access-Control-Max-Age", "86400");
+        res.sendStatus(200);
+        return;
       }
 
       next();
     });
-
-    // Basic middleware
-    app.use(express.json());
 
     // Routes
     app.use(
