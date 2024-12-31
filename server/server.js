@@ -2,8 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
-import { errorHandler } from './middleware/errorHandler.js';
-import { initializeTwilioClient, testSMSConfig } from './utils/smsService.js';
+import corsOptions from "./config/corsOptions.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+import { initializeTwilioClient, testSMSConfig } from "./utils/smsService.js";
 
 // Load env vars
 dotenv.config();
@@ -19,13 +20,11 @@ const startServer = async () => {
 
     const app = express();
 
-    // Simple CORS middleware - apply before any other middleware
-    app.use(
-      cors({
-        origin: true, // Allow all origins temporarily
-        credentials: true,
-      })
-    );
+    // Handle preflight requests
+    app.options("*", cors(corsOptions));
+
+    // Apply CORS with specific configuration
+    app.use(cors(corsOptions));
 
     // Basic middleware
     app.use(express.json());
@@ -39,6 +38,13 @@ const startServer = async () => {
         method: req.method,
         origin: req.headers.origin,
         path: req.path,
+        headers: {
+          "access-control-request-method":
+            req.headers["access-control-request-method"],
+          "access-control-request-headers":
+            req.headers["access-control-request-headers"],
+          origin: req.headers.origin,
+        },
       });
       next();
     });
@@ -67,7 +73,7 @@ const startServer = async () => {
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log("Environment:", process.env.NODE_ENV);
-      console.log("CORS enabled for all origins");
+      console.log("CORS enabled for origins:", corsOptions.origin);
     });
 
     // Handle unhandled promise rejections
@@ -76,7 +82,7 @@ const startServer = async () => {
       server.close(() => process.exit(1));
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
+    console.error("Failed to start server:", error);
     process.exit(1);
   }
 };
