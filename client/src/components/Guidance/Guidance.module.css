@@ -1,0 +1,298 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.questionCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress {
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.questionText {
+  font-size: 1.5rem;
+  color: #1a202c;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.options {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1rem;
+}
+
+.optionButton {
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  color: #2d3748;
+  font-weight: 500;
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.optionButton:hover {
+  background: #edf2f7;
+  border-color: #4299e1;
+  transform: translateY(-2px);
+}
+
+.optionButton:before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid #e2e8f0;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.optionButton.selected:before {
+  background: white;
+  border-color: white;
+}
+
+.results {
+  text-align: center;
+}
+
+.resultTitle {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+}
+
+.recommendationCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recommendationCard h3 {
+  font-size: 1.5rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.estimatedCost {
+  font-weight: bold;
+  color: #4299e1;
+  margin: 1rem 0;
+}
+
+.actionButton {
+  background: #4299e1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.actionButton:hover {
+  background: #3182ce;
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  .options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.secondaryButton {
+  background: transparent;
+  border: 2px solid #4299e1;
+  color: #4299e1;
+  margin-top: 1rem;
+}
+
+.secondaryButton:hover {
+  background: #ebf8ff;
+}
+
+.actionButton + .actionButton {
+  margin-top: 1rem;
+}
+
+.recommendationCard p {
+  color: #2d3748;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.category {
+  color: #4299e1;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.description {
+  color: #2d3748;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.details {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.details h4 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.details li {
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.details li:before {
+  content: "✓";
+  color: #4299e1;
+  position: absolute;
+  left: 0;
+}
+
+@media (min-width: 768px) {
+  .options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.progressContainer {
+  margin-bottom: 2rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #4299e1;
+  transition: width 0.3s ease;
+}
+
+.navigationButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.navButton {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  background: transparent;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.navButton:hover:not(.disabled) {
+  border-color: #4299e1;
+  color: #4299e1;
+}
+
+.navButton.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.selected {
+  background: #4299e1 !important;
+  border-color: #4299e1 !important;
+  color: white !important;
+}
+
+.recommendationCard .navigationButtons {
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.recommendationCard .navigationButtons button {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .recommendationCard .navigationButtons {
+    flex-direction: row;
+  }
+
+  .recommendationCard .navigationButtons button {
+    width: auto;
+  }
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.navigationTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.backButton {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  background: transparent;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.backButton:hover {
+  border-color: #4299e1;
+  color: #4299e1;
+} 
