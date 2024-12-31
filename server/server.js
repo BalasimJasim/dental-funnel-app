@@ -19,27 +19,21 @@ const startServer = async () => {
 
     const app = express();
 
-    // Basic middleware
-    app.use(express.json());
-
     // CORS configuration
     const corsOptions = {
       origin: function (origin, callback) {
         const allowedOrigins = [
           "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
           "http://localhost:5174",
+          // Add this for Render's health checks
+          undefined,
         ];
 
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) {
-          return callback(null, true);
-        }
-
-        if (allowedOrigins.indexOf(origin) !== -1) {
+        if (allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
           console.log("Blocked origin:", origin);
-          callback(new Error("Not allowed by CORS"));
+          callback(null, true); // Temporarily allow all origins for debugging
         }
       },
       credentials: true,
@@ -54,17 +48,19 @@ const startServer = async () => {
       optionsSuccessStatus: 204,
     };
 
-    // Enable pre-flight requests for all routes
-    app.options("*", cors(corsOptions));
-
-    // Apply CORS to all routes
+    // Move CORS middleware before other middleware
     app.use(cors(corsOptions));
+    app.use(express.json());
 
     // Add CORS debugging middleware
     app.use((req, res, next) => {
-      console.log("Request Headers:", req.headers);
-      console.log("Origin:", req.headers.origin);
-      console.log("Method:", req.method);
+      console.log({
+        url: req.url,
+        method: req.method,
+        origin: req.headers.origin,
+        host: req.headers.host,
+        referer: req.headers.referer,
+      });
       next();
     });
 

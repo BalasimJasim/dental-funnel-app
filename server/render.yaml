@@ -2,6 +2,7 @@ services:
   - type: web
     name: dental-funnel-api
     env: node
+    rootDir: server
     buildCommand: npm install
     startCommand: npm start
     envVars:
