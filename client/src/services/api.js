@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-console.log("API Base URL:", API_BASE_URL); // Debug log
+console.log("API Base URL:", API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,7 +10,7 @@ const api = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  withCredentials: true,
+  withCredentials: false,
 });
 
 // Add request interceptor for debugging
@@ -51,7 +51,11 @@ export const appointmentService = {
 
   async bookAppointment(appointmentData) {
     try {
-      const response = await api.post("/appointments", appointmentData);
+      const response = await api.post("/appointments", appointmentData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
     } catch (error) {
       console.error("API Error:", error);

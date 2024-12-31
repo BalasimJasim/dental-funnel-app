@@ -20,32 +20,34 @@ const startServer = async () => {
 
     const app = express();
 
-    // Handle preflight requests
-    app.options("*", cors(corsOptions));
-
-    // Apply CORS with specific configuration
+    // Enable CORS for all routes
     app.use(cors(corsOptions));
 
     // Basic middleware
     app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
 
     // Request logging
     app.use((req, res, next) => {
+      // Log the request
       console.log({
         timestamp: new Date().toISOString(),
-        url: req.url,
         method: req.method,
+        url: req.url,
         origin: req.headers.origin,
-        path: req.path,
-        headers: {
-          "access-control-request-method":
-            req.headers["access-control-request-method"],
-          "access-control-request-headers":
-            req.headers["access-control-request-headers"],
-          origin: req.headers.origin,
-        },
+        headers: req.headers,
       });
+
+      // Add CORS headers manually if needed
+      res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+      res.header(
+        "Access-Control-Allow-Methods",
+        "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+      );
+      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+      if (req.method === "OPTIONS") {
+        return res.status(204).send();
+      }
       next();
     });
 
@@ -73,7 +75,6 @@ const startServer = async () => {
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log("Environment:", process.env.NODE_ENV);
-      console.log("CORS enabled for origins:", corsOptions.origin);
     });
 
     // Handle unhandled promise rejections
