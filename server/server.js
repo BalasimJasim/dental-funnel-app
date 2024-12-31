@@ -19,31 +19,26 @@ const startServer = async () => {
 
     const app = express();
 
-    // Apply CORS with specific configuration
-    app.use(
-      cors({
-        origin: [
-          "http://localhost:5174",
-          "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
-          "https://dental-funnel-app.vercel.app",
-          // Add any other domains that need access
-        ],
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: [
-          "Origin",
-          "X-Requested-With",
-          "Content-Type",
-          "Accept",
-          "Authorization",
-        ],
-        credentials: true,
-        optionsSuccessStatus: 200,
-        preflightContinue: false,
-      })
-    );
-
     // Basic middleware
     app.use(express.json());
+
+    // CORS configuration
+    const corsOptions = {
+      origin: [
+        "http://localhost:5174",
+        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
+        "https://dental-funnel-app.vercel.app",
+      ],
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    };
+
+    // Handle preflight requests
+    app.options("*", cors(corsOptions));
+
+    // Apply CORS to all routes
+    app.use(cors(corsOptions));
 
     // Test route to verify CORS
     app.get("/api/test-cors", (req, res) => {
@@ -73,11 +68,7 @@ const startServer = async () => {
     // Start server
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
-      console.log("CORS enabled for:", [
-        "http://localhost:5174",
-        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
-        "https://dental-funnel-app.vercel.app",
-      ]);
+      console.log("CORS enabled for:", corsOptions.origin);
     });
 
     // Handle unhandled promise rejections
