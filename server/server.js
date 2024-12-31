@@ -26,7 +26,7 @@ const startServer = async () => {
     app.use((req, res, next) => {
       const allowedOrigins = [
         "http://localhost:5174",
-        "https://your-vercel-domain.vercel.app", // You'll add this after Vercel deployment
+        "https://dental-funnel-app.vercel.app",
       ];
 
       const origin = req.headers.origin;
