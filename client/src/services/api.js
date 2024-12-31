@@ -6,43 +6,9 @@ const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Accept: "application/json",
   },
-  withCredentials: true,
+  withCredentials: false,
 });
-
-// Add request interceptor for debugging
-api.interceptors.request.use(
-  (config) => {
-    console.log("Request:", {
-      url: config.url,
-      method: config.method,
-      headers: config.headers,
-      data: config.data,
-    });
-    return config;
-  },
-  (error) => {
-    console.error("Request Error:", error);
-    return Promise.reject(error);
-  }
-);
-
-// Add response interceptor for debugging
-api.interceptors.response.use(
-  (response) => {
-    console.log("Response:", {
-      status: response.status,
-      headers: response.headers,
-      data: response.data,
-    });
-    return response;
-  },
-  (error) => {
-    console.error("Response Error:", error);
-    return Promise.reject(error);
-  }
-);
 
 export const appointmentService = {
   getAvailableSlots: async (date) => {
@@ -57,19 +23,24 @@ export const appointmentService = {
 
   async bookAppointment(appointmentData) {
     try {
-      const response = await api.post('/appointments', appointmentData);
-      return response.data;
+      const response = await fetch(`${API_BASE_URL}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(appointmentData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
     } catch (error) {
       console.error("API Error:", error);
-      if (error.response) {
-        throw new Error(error.response.data.message || "Server error");
-      } else if (error.request) {
-        throw new Error("Network error - no response received");
-      } else {
-        throw new Error("Error setting up request");
-      }
+      throw error;
     }
-  }
+  },
 };
 
 export const serviceService = {

@@ -19,35 +19,32 @@ const startServer = async () => {
 
     const app = express();
 
+    // Enable CORS for all requests
+    app.use((req, res, next) => {
+      res.setHeader(
+        "Access-Control-Allow-Origin",
+        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app"
+      );
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS"
+      );
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization"
+      );
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+
+      // Handle preflight requests
+      if (req.method === "OPTIONS") {
+        return res.status(200).end();
+      }
+
+      next();
+    });
+
     // Basic middleware
     app.use(express.json());
-
-    // CORS configuration
-    const corsOptions = {
-      origin: [
-        "http://localhost:5174",
-        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
-        "https://dental-funnel-app.vercel.app",
-      ],
-      credentials: true,
-      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
-    };
-
-    // Handle preflight requests
-    app.options("*", cors(corsOptions));
-
-    // Apply CORS to all routes
-    app.use(cors(corsOptions));
-
-    // Test route to verify CORS
-    app.get("/api/test-cors", (req, res) => {
-      res.json({
-        message: "CORS is working!",
-        origin: req.headers.origin,
-        headers: req.headers,
-      });
-    });
 
     // Routes
     app.use(
@@ -68,7 +65,6 @@ const startServer = async () => {
     // Start server
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
-      console.log("CORS enabled for:", corsOptions.origin);
     });
 
     // Handle unhandled promise rejections
