@@ -19,8 +19,28 @@ const startServer = async () => {
 
     const app = express();
 
-    // Apply CORS first, before any middleware or routes
-    app.use(cors()); // Allow all origins temporarily for testing
+    // Apply CORS with specific configuration
+    app.use(
+      cors({
+        origin: [
+          "http://localhost:5174",
+          "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
+          "https://dental-funnel-app.vercel.app",
+          // Add any other domains that need access
+        ],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: [
+          "Origin",
+          "X-Requested-With",
+          "Content-Type",
+          "Accept",
+          "Authorization",
+        ],
+        credentials: true,
+        optionsSuccessStatus: 200,
+        preflightContinue: false,
+      })
+    );
 
     // Basic middleware
     app.use(express.json());
@@ -53,6 +73,11 @@ const startServer = async () => {
     // Start server
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      console.log("CORS enabled for:", [
+        "http://localhost:5174",
+        "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
+        "https://dental-funnel-app.vercel.app",
+      ]);
     });
 
     // Handle unhandled promise rejections

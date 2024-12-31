@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,6 +10,39 @@ const api = axios.create({
   },
   withCredentials: true,
 });
+
+// Add request interceptor for debugging
+api.interceptors.request.use(
+  (config) => {
+    console.log("Request:", {
+      url: config.url,
+      method: config.method,
+      headers: config.headers,
+      data: config.data,
+    });
+    return config;
+  },
+  (error) => {
+    console.error("Request Error:", error);
+    return Promise.reject(error);
+  }
+);
+
+// Add response interceptor for debugging
+api.interceptors.response.use(
+  (response) => {
+    console.log("Response:", {
+      status: response.status,
+      headers: response.headers,
+      data: response.data,
+    });
+    return response;
+  },
+  (error) => {
+    console.error("Response Error:", error);
+    return Promise.reject(error);
+  }
+);
 
 export const appointmentService = {
   getAvailableSlots: async (date) => {
