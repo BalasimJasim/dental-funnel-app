@@ -16,26 +16,23 @@ export const appointmentService = {
       const response = await api.get(`/appointments/available-slots/${date}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching slots:', error);
+      console.error("Error fetching slots:", error);
       throw error;
     }
   },
 
-  bookAppointment: async (appointmentData) => {
+  async bookAppointment(appointmentData) {
     try {
       const response = await api.post('/appointments', appointmentData);
       return response.data;
     } catch (error) {
+      console.error("API Error:", error);
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        throw new Error(error.response.data.error || 'Server error');
+        throw new Error(error.response.data.message || "Server error");
       } else if (error.request) {
-        // The request was made but no response was received
-        throw new Error('No response from server');
+        throw new Error("Network error - no response received");
       } else {
-        // Something happened in setting up the request that triggered an Error
-        throw new Error('Error setting up request');
+        throw new Error("Error setting up request");
       }
     }
   }

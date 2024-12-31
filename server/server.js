@@ -22,10 +22,15 @@ const startServer = async () => {
     // Basic middleware
     app.use(express.json());
 
-    // TEMPORARY FOR TESTING - Remove in production
+    // Configure CORS
     app.use(
       cors({
-        origin: "*",
+        origin: [
+          "http://localhost:5174",
+          "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
+          "https://dental-funnel-app.vercel.app",
+        ],
+        credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
       })
@@ -41,6 +46,11 @@ const startServer = async () => {
       "/api/service-guidance",
       (await import("./routes/guidance.js")).default
     );
+
+    // Add this after your routes
+    app.get("/api/test", (req, res) => {
+      res.json({ message: "API is working!", cors: "enabled" });
+    });
 
     // Error Handler
     app.use(errorHandler);
