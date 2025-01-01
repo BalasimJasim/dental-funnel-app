@@ -6,6 +6,15 @@ export default defineConfig({
   plugins: [react()],
   build: {
     sourcemap: true,
+    minify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
-  define: {},
+  define: {
+    // Ensure environment variables are available
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+  },
 });

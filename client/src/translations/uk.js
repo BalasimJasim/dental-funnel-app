@@ -1,4 +1,4 @@
-console.log("1. Loading uk.js translations file");
+console.log("DEPLOYMENT: Loading translations file");
 
 export const ukTranslations = {
   landing: {
@@ -96,7 +96,11 @@ export const ukTranslations = {
   },
 };
 
-// After the translations object
-console.log("2. ukTranslations loaded:", ukTranslations.landing.mainTitle);
-
-console.log("2. ukTranslations loaded:", ukTranslations.landing.mainTitle);
+// Add deployment check
+if (import.meta.env.MODE === "production") {
+  console.log("DEPLOYMENT: Running in production mode");
+  console.log("DEPLOYMENT: Translations loaded:", {
+    mainTitle: ukTranslations.landing.mainTitle,
+    hasTranslations: !!ukTranslations,
+  });
+}

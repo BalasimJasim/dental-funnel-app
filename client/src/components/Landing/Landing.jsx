@@ -3,21 +3,24 @@ import styles from './Landing.module.css';
 import { useTranslations } from "../../context/LanguageContext";
 
 const Landing = ({ onStartGuidance }) => {
-  console.log("11. Landing component rendering");
+  console.log("DEPLOYMENT: Landing component mounting");
   const translations = useTranslations();
   const { landing } = translations;
 
-  console.log("12. Landing translations:", {
-    mainTitle: landing?.mainTitle,
-    mainSubtitle: landing?.mainSubtitle,
-  });
+  // Add deployment check
+  if (import.meta.env.MODE === "production") {
+    console.log("DEPLOYMENT: Landing translations:", {
+      hasTranslations: !!landing,
+      mainTitle: landing?.mainTitle,
+    });
+  }
 
   const [isHovered, setIsHovered] = useState(false);
 
-  // Add error boundary
+  // Add error boundary for missing translations
   if (!landing) {
-    console.error("13. Landing translations missing!");
-    return <div>Loading...</div>;
+    console.error("DEPLOYMENT: Landing translations missing!");
+    return <div>Loading translations...</div>;
   }
 
   return (

@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --debug",
-    "build": "vite build",
+    "build": "echo 'Starting production build' && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --debug"
   },
   "dependencies": {
     "axios": "^1.7.9",
