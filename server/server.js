@@ -23,6 +23,22 @@ const startServer = async () => {
     // Enable CORS with options
     app.use(cors(corsOptions));
 
+    // Add headers to all responses
+    app.use((req, res, next) => {
+      res.header("Access-Control-Allow-Credentials", "true");
+      res.header(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS"
+      );
+
+      const origin = req.headers.origin;
+      if (allowedOrigins.includes(origin)) {
+        res.header("Access-Control-Allow-Origin", origin);
+      }
+
+      next();
+    });
+
     // Basic middleware
     app.use(express.json());
 
