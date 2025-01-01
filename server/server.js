@@ -15,15 +15,24 @@ const startServer = async () => {
 
     const app = express();
 
-    // CORS middleware should be first
+    // Handle preflight requests
+    app.options("*", cors(corsOptions));
+
+    // Apply CORS middleware first
     app.use(cors(corsOptions));
 
     // Body parser
     app.use(express.json());
 
-    // Simple logging
+    // Debug middleware
     app.use((req, res, next) => {
-      console.log(`${req.method} ${req.url} from ${req.headers.origin}`);
+      console.log({
+        timestamp: new Date().toISOString(),
+        method: req.method,
+        url: req.url,
+        origin: req.headers.origin,
+        headers: req.headers,
+      });
       next();
     });
 
@@ -46,8 +55,14 @@ const startServer = async () => {
     app.use(errorHandler);
 
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      console.log("CORS enabled for:", corsOptions.origin);
+    });
+
+    process.on("unhandledRejection", (err, promise) => {
+      console.log(`Error: ${err.message}`);
+      server.close(() => process.exit(1));
     });
   } catch (error) {
     console.error("Failed to start server:", error);

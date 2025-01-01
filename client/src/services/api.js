@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
+console.log("Using API URL:", API_BASE_URL); // Debug log
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -11,12 +12,15 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Simplified interceptors for debugging
+// Debug interceptor
 api.interceptors.request.use(
   (config) => {
-    console.log(
-      `Making ${config.method.toUpperCase()} request to: ${config.url}`
-    );
+    console.log("Request:", {
+      url: config.url,
+      method: config.method,
+      headers: config.headers,
+      baseURL: config.baseURL,
+    });
     return config;
   },
   (error) => Promise.reject(error)
@@ -25,7 +29,15 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API Error:", error.response || error);
+    if (error.response) {
+      console.error("Response Error:", {
+        status: error.response.status,
+        headers: error.response.headers,
+        data: error.response.data,
+      });
+    } else {
+      console.error("Request Error:", error.message);
+    }
     return Promise.reject(error);
   }
 );
