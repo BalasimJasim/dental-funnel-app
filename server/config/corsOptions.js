@@ -1,4 +1,4 @@
-const allowedOrigins = [
+export const allowedOrigins = [
   "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
   "https://dental-funnel-app.vercel.app",
   "http://localhost:5173",
