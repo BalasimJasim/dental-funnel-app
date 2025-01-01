@@ -1,25 +1,29 @@
-import { useState } from 'react';
-import styles from './Landing.module.css';
+import { useState, useEffect } from "react";
+import styles from "./Landing.module.css";
 import { useTranslations } from "../../context/LanguageContext";
 
 const Landing = ({ onStartGuidance }) => {
-  console.log("DEPLOYMENT: Landing component mounting");
   const translations = useTranslations();
   const { landing } = translations;
-
-  // Add deployment check
-  if (import.meta.env.MODE === "production") {
-    console.log("DEPLOYMENT: Landing translations:", {
-      hasTranslations: !!landing,
-      mainTitle: landing?.mainTitle,
-    });
-  }
-
   const [isHovered, setIsHovered] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Add error boundary for missing translations
+  useEffect(() => {
+    console.warn("FORCE-DEBUG: Landing mounted");
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      console.warn("FORCE-DEBUG: Landing translations:", {
+        hasTranslations: !!landing,
+        mainTitle: landing?.mainTitle,
+      });
+    }
+  }, [mounted, landing]);
+
   if (!landing) {
-    console.error("DEPLOYMENT: Landing translations missing!");
+    console.warn("FORCE-DEBUG: Landing translations missing!");
     return <div>Loading translations...</div>;
   }
 
@@ -107,4 +111,4 @@ const Landing = ({ onStartGuidance }) => {
   );
 };
 
-export default Landing; 
+export default Landing;
