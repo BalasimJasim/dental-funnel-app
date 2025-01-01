@@ -15,11 +15,6 @@ const api = axios.create({
 // Debug interceptor
 api.interceptors.request.use(
   (config) => {
-    // Ensure URL starts with /api
-    if (!config.url.startsWith("/api") && !config.url.includes("/api/")) {
-      config.url = `/api${config.url}`;
-    }
-
     console.log("Making request:", {
       url: `${config.baseURL}${config.url}`,
       method: config.method,
@@ -33,22 +28,27 @@ api.interceptors.request.use(
   }
 );
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response) {
-      console.error("Response Error:", {
-        status: error.response.status,
-        headers: error.response.headers,
-        data: error.response.data
-      });
-    } else if (error.request) {
-      console.error("Request Error:", error.request);
-    } else {
-      console.error("Error:", error.message);
+// Create the appointment service
+export const appointmentService = {
+  bookAppointment: async (appointmentData) => {
+    try {
+      const response = await api.post("/appointments", appointmentData);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("API Error:", error);
+      return { success: false, error };
     }
-    return Promise.reject(error);
-  }
-);
+  },
+
+  getAvailableSlots: async (date) => {
+    try {
+      const response = await api.get(`/appointments/slots?date=${date}`);
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error("API Error:", error);
+      return { success: false, error };
+    }
+  },
+};
 
 export default api; 

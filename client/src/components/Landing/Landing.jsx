@@ -3,11 +3,22 @@ import styles from './Landing.module.css';
 import { useTranslations } from "../../context/LanguageContext";
 
 const Landing = ({ onStartGuidance }) => {
+  console.log("11. Landing component rendering");
   const translations = useTranslations();
   const { landing } = translations;
+
+  console.log("12. Landing translations:", {
+    mainTitle: landing?.mainTitle,
+    mainSubtitle: landing?.mainSubtitle,
+  });
+
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log("Landing component translations:", landing);
+  // Add error boundary
+  if (!landing) {
+    console.error("13. Landing translations missing!");
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={styles.container}>

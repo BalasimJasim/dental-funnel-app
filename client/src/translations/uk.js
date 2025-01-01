@@ -1,3 +1,5 @@
+console.log("1. Loading uk.js translations file");
+
 export const ukTranslations = {
   landing: {
     mainTitle: "Перетворіть Вашу Посмішку Сьогодні",
@@ -94,5 +96,7 @@ export const ukTranslations = {
   },
 };
 
-// Add debug log
-console.log("Loading translations:", ukTranslations);
+// After the translations object
+console.log("2. ukTranslations loaded:", ukTranslations.landing.mainTitle);
+
+console.log("2. ukTranslations loaded:", ukTranslations.landing.mainTitle);
