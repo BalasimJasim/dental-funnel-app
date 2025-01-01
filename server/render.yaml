@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: dental-funnel-api
+    name: dental-funnel-app
     env: node
     rootDir: server
     buildCommand: npm install
@@ -10,3 +10,5 @@ services:
         value: production
       - key: PORT
         value: "5000"
+      - key: CORS_ORIGIN
+        value: "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app"
