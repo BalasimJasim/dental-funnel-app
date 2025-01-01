@@ -15,11 +15,43 @@ const startServer = async () => {
 
     const app = express();
 
+    // Debug middleware - add before CORS middleware
+    app.use((req, res, next) => {
+      console.log("Incoming request:", {
+        timestamp: new Date().toISOString(),
+        method: req.method,
+        url: req.url,
+        origin: req.headers.origin,
+        host: req.headers.host,
+        headers: req.headers,
+      });
+      next();
+    });
+
     // Handle preflight requests
     app.options("*", cors(corsOptions));
 
-    // Apply CORS middleware first
+    // Apply CORS middleware
     app.use(cors(corsOptions));
+
+    // Add CORS headers manually as backup
+    app.use((req, res, next) => {
+      res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+      res.header(
+        "Access-Control-Allow-Methods",
+        "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+      );
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, Accept"
+      );
+      res.header("Access-Control-Allow-Credentials", "true");
+
+      if (req.method === "OPTIONS") {
+        return res.status(200).end();
+      }
+      next();
+    });
 
     // Body parser
     app.use(express.json());

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-console.log("Using API URL:", API_BASE_URL); // Debug log
+console.log("Using API URL:", API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -15,7 +15,11 @@ const api = axios.create({
 // Debug interceptor
 api.interceptors.request.use(
   (config) => {
-    console.log("Request:", {
+    // Add timestamp to URL to prevent caching
+    const separator = config.url.includes("?") ? "&" : "?";
+    config.url = `${config.url}${separator}t=${Date.now()}`;
+
+    console.log("Making request:", {
       url: config.url,
       method: config.method,
       headers: config.headers,
@@ -23,7 +27,10 @@ api.interceptors.request.use(
     });
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error("Request error:", error);
+    return Promise.reject(error);
+  }
 );
 
 api.interceptors.response.use(
