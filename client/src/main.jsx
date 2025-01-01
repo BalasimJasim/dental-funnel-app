@@ -6,6 +6,11 @@ import "./index.css";
 
 console.log("8. main.jsx starting");
 
+console.log("Environment:", {
+  mode: import.meta.env.MODE,
+  apiUrl: import.meta.env.VITE_API_URL,
+});
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
