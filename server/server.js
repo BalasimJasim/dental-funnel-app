@@ -20,15 +20,14 @@ const startServer = async () => {
 
     const app = express();
 
-    // Enable CORS for all routes
+    // Enable CORS with options
     app.use(cors(corsOptions));
 
     // Basic middleware
     app.use(express.json());
 
-    // Request logging
+    // Request logging (remove CORS headers from here)
     app.use((req, res, next) => {
-      // Log the request
       console.log({
         timestamp: new Date().toISOString(),
         method: req.method,
@@ -36,18 +35,6 @@ const startServer = async () => {
         origin: req.headers.origin,
         headers: req.headers,
       });
-
-      // Add CORS headers manually if needed
-      res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
-      res.header(
-        "Access-Control-Allow-Methods",
-        "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
-      );
-      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-      if (req.method === "OPTIONS") {
-        return res.status(204).send();
-      }
       next();
     });
 
