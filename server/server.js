@@ -15,53 +15,23 @@ const startServer = async () => {
 
     const app = express();
 
-    // Logging middleware
+    // Enable CORS for all requests
+    app.use(cors(corsOptions));
+
+    // Basic middleware
+    app.use(express.json());
+
+    // Debug logging
     app.use((req, res, next) => {
       console.log({
         timestamp: new Date().toISOString(),
         method: req.method,
         url: req.url,
         origin: req.headers.origin,
-        headers: {
-          "access-control-request-method":
-            req.headers["access-control-request-method"],
-          "access-control-request-headers":
-            req.headers["access-control-request-headers"],
-          origin: req.headers.origin,
-        },
+        headers: req.headers,
       });
-
-      // Log response headers after they're set
-      const oldEnd = res.end;
-      res.end = function (...args) {
-        console.log("Response headers:", res.getHeaders());
-        oldEnd.apply(res, args);
-      };
-
       next();
     });
-
-    // Handle OPTIONS preflight
-    app.options("*", (req, res, next) => {
-      console.log("Handling OPTIONS request");
-      res.header("Access-Control-Allow-Origin", req.headers.origin);
-      res.header(
-        "Access-Control-Allow-Methods",
-        "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
-      );
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Content-Type, Authorization, Accept"
-      );
-      res.header("Access-Control-Allow-Credentials", "true");
-      res.status(204).end();
-    });
-
-    // Apply CORS middleware
-    app.use(cors(corsOptions));
-
-    // Parse JSON bodies
-    app.use(express.json());
 
     // Routes
     app.get("/", (req, res) => {
@@ -78,20 +48,7 @@ const startServer = async () => {
       (await import("./routes/guidance.js")).default
     );
 
-    // Error handling
-    app.use((err, req, res, next) => {
-      console.error("Error:", err);
-      if (err.message.includes("not allowed by CORS")) {
-        res.status(403).json({
-          error: "CORS Error",
-          message: err.message,
-          origin: req.headers.origin,
-        });
-      } else {
-        next(err);
-      }
-    });
-
+    // Error Handler
     app.use(errorHandler);
 
     const PORT = process.env.PORT || 5000;

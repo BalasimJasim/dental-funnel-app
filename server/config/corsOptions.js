@@ -6,36 +6,11 @@ export const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    console.log("Request origin:", origin);
-
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) {
-      console.log("No origin");
-      return callback(null, true);
-    }
-
-    if (allowedOrigins.includes(origin)) {
-      console.log("Origin allowed:", origin);
-      callback(null, true);
-    } else {
-      console.log("Origin blocked:", origin);
-      callback(new Error(`Origin ${origin} not allowed by CORS`));
-    }
-  },
+  origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Content-Type",
-    "Accept",
-    "Authorization",
-  ],
-  exposedHeaders: ["Content-Length", "Content-Type"],
-  preflightContinue: false,
+  allowedHeaders: ["Content-Type", "Authorization", "Accept"],
   optionsSuccessStatus: 204,
-  maxAge: 86400,
 };
 
 export default corsOptions;

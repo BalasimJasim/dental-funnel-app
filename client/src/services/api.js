@@ -9,7 +9,7 @@ const api = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  withCredentials: true,
+  withCredentials: false,
 });
 
 // Debug interceptor
@@ -20,7 +20,6 @@ api.interceptors.request.use(
       method: config.method,
       headers: config.headers,
       baseURL: config.baseURL,
-      withCredentials: config.withCredentials,
     });
     return config;
   },
