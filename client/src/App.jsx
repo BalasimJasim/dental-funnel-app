@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import Landing from './components/Landing/Landing'
 import Guidance from './components/Guidance/Guidance'
-import Appointment from './components/Appointment/Appointment'
-import { ukTranslations } from "./translations/uk";
+import Appointment from "./components/Appointment/Appointment";
 import './App.css'
 
 function App() {
