@@ -6,11 +6,18 @@ export const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: allowedOrigins,
-  credentials: true,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: false,
+  optionsSuccessStatus: 204,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept"],
-  optionsSuccessStatus: 204,
+  preflightContinue: false,
 };
 
 export default corsOptions;

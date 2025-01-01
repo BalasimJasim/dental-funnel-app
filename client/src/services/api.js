@@ -15,6 +15,9 @@ const api = axios.create({
 // Debug interceptor
 api.interceptors.request.use(
   (config) => {
+    // Add origin header for debugging
+    config.headers["X-Origin"] = window.location.origin;
+
     console.log("Making request:", {
       url: config.url,
       method: config.method,

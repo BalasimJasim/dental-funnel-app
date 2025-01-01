@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import corsOptions, { allowedOrigins } from "./config/corsOptions.js";
+import { corsMiddleware } from "./middleware/cors.middleware.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
 // Load env vars
@@ -15,15 +16,19 @@ const startServer = async () => {
 
     const app = express();
 
-    // Enable CORS for all requests
+    // Apply custom CORS middleware first
+    app.use(corsMiddleware);
+
+    // Then apply cors package middleware
     app.use(cors(corsOptions));
 
     // Basic middleware
     app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
     // Debug logging
     app.use((req, res, next) => {
-      console.log({
+      console.log("Request:", {
         timestamp: new Date().toISOString(),
         method: req.method,
         url: req.url,
