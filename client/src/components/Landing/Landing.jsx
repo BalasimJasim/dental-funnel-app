@@ -1,15 +1,14 @@
 import { useState } from "react";
 import styles from "./Landing.module.css";
-import { useTranslations } from "../../context/LanguageContext";
+import { ukTranslations } from "../translations/uk";
 
 const Landing = ({ onStartGuidance }) => {
-  const translations = useTranslations();
-  const { landing } = translations;
+  const landing = ukTranslations.landing;
   const [isHovered, setIsHovered] = useState(false);
 
-  // Verify translations at component level
   if (!landing || !landing.mainTitle) {
-    throw new Error("Landing translations not available!");
+    console.error("Missing translations in Landing component");
+    return <div>Error loading content</div>;
   }
 
   return (
