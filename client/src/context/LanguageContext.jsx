@@ -1,34 +1,23 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { ukTranslations } from "../translations/uk";
+import { FORCE_UKRAINIAN } from "../config/language";
 
 const LanguageContext = createContext();
 
+// Force initialize translations
+const TRANSLATIONS = ukTranslations;
+
+if (!TRANSLATIONS || !TRANSLATIONS.landing) {
+  throw new Error("Translations failed to load!");
+}
+
 export function LanguageProvider({ children }) {
-  const [translations, setTranslations] = useState(null);
+  const [translations] = useState(TRANSLATIONS);
 
-  useEffect(() => {
-    console.warn("FORCE-DEBUG: Setting translations in provider");
-    setTranslations(ukTranslations);
-
-    // Force re-render after a small delay
-    const timer = setTimeout(() => {
-      console.warn("FORCE-DEBUG: Forcing re-render");
-      setTranslations({ ...ukTranslations });
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!translations) {
-    console.warn("FORCE-DEBUG: Translations not yet loaded");
-    return <div>Loading translations...</div>;
+  if (!translations || !translations.landing) {
+    throw new Error("Translations not available in provider!");
   }
-
-  console.warn("FORCE-DEBUG: Rendering provider with translations:", {
-    hasTranslations: !!translations,
-    mainTitle: translations?.landing?.mainTitle,
-  });
 
   return (
     <LanguageContext.Provider value={translations}>
@@ -44,15 +33,9 @@ LanguageProvider.propTypes = {
 export function useTranslations() {
   const context = useContext(LanguageContext);
 
-  if (!context) {
-    console.warn("FORCE-DEBUG: No translations in context!");
-    throw new Error("useTranslations must be used within a LanguageProvider");
+  if (!context || !context.landing) {
+    throw new Error("Translations not available in component!");
   }
-
-  console.warn("FORCE-DEBUG: Translations accessed:", {
-    hasTranslations: !!context,
-    mainTitle: context?.landing?.mainTitle,
-  });
 
   return context;
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./Landing.module.css";
 import { useTranslations } from "../../context/LanguageContext";
 
@@ -6,25 +6,10 @@ const Landing = ({ onStartGuidance }) => {
   const translations = useTranslations();
   const { landing } = translations;
   const [isHovered, setIsHovered] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    console.warn("FORCE-DEBUG: Landing mounted");
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      console.warn("FORCE-DEBUG: Landing translations:", {
-        hasTranslations: !!landing,
-        mainTitle: landing?.mainTitle,
-      });
-    }
-  }, [mounted, landing]);
-
-  if (!landing) {
-    console.warn("FORCE-DEBUG: Landing translations missing!");
-    return <div>Loading translations...</div>;
+  // Verify translations at component level
+  if (!landing || !landing.mainTitle) {
+    throw new Error("Landing translations not available!");
   }
 
   return (
