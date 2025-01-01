@@ -1,26 +1,30 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { ukTranslations } from "../translations/uk";
-import { FORCE_UKRAINIAN } from "../config/language";
 
-const LanguageContext = createContext();
-
-// Force initialize translations
+// Force translations to be available immediately
 const TRANSLATIONS = ukTranslations;
 
-if (!TRANSLATIONS || !TRANSLATIONS.landing) {
-  throw new Error("Translations failed to load!");
+// Verify translations at context creation
+if (!TRANSLATIONS?.landing?.mainTitle) {
+  console.error("Translation check failed:", {
+    hasTranslations: !!TRANSLATIONS,
+    hasLanding: !!TRANSLATIONS?.landing,
+    environment: import.meta.env.MODE,
+  });
+  throw new Error("Translations not available at context creation");
 }
 
-export function LanguageProvider({ children }) {
-  const [translations] = useState(TRANSLATIONS);
+const LanguageContext = createContext(TRANSLATIONS);
 
-  if (!translations || !translations.landing) {
-    throw new Error("Translations not available in provider!");
+export function LanguageProvider({ children }) {
+  // Log the environment and translations state
+  if (import.meta.env.PROD) {
+    console.log("Provider running in production mode");
   }
 
   return (
-    <LanguageContext.Provider value={translations}>
+    <LanguageContext.Provider value={TRANSLATIONS}>
       {children}
     </LanguageContext.Provider>
   );
@@ -33,8 +37,13 @@ LanguageProvider.propTypes = {
 export function useTranslations() {
   const context = useContext(LanguageContext);
 
-  if (!context || !context.landing) {
-    throw new Error("Translations not available in component!");
+  if (!context?.landing?.mainTitle) {
+    console.error("Translation context check failed:", {
+      hasContext: !!context,
+      hasLanding: !!context?.landing,
+      environment: import.meta.env.MODE,
+    });
+    throw new Error("Translations not available in component");
   }
 
   return context;

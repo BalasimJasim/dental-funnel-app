@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --debug",
-    "build": "echo 'Starting production build' && vite build",
+    "dev": "vite",
+    "build": "node scripts/verify-translations.js && vite build",
     "lint": "eslint .",
-    "preview": "vite preview --debug"
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.7.9",

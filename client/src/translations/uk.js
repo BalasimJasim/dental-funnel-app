@@ -1,5 +1,5 @@
-// Direct export without any conditional logic
-export const ukTranslations = {
+// Force translations to be available in both dev and prod
+const translations = {
   landing: {
     mainTitle: "Перетворіть Вашу Посмішку Сьогодні",
     mainSubtitle: "Отримайте індивідуальний план лікування за 3 простих кроки",
@@ -95,7 +95,16 @@ export const ukTranslations = {
   },
 };
 
+// Ensure translations are loaded in production
+if (import.meta.env.PROD) {
+  console.log("Production mode: Forcing Ukrainian translations");
+}
+
+export const ukTranslations = translations;
+
 // Verify translations are loaded
-if (!ukTranslations || !ukTranslations.landing) {
-  throw new Error("Ukrainian translations failed to initialize!");
+if (!translations.landing?.mainTitle) {
+  throw new Error(
+    `Translations not loaded correctly. Environment: ${import.meta.env.MODE}`
+  );
 }
