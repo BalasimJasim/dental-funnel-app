@@ -25,20 +25,11 @@ const startServer = async () => {
         origin: req.headers.origin,
         headers: req.headers,
       });
-
-      // Log response headers after they're set
-      const oldEnd = res.end;
-      res.end = function (...args) {
-        console.log("Response Headers:", this.getHeaders());
-        oldEnd.apply(this, args);
-      };
-
       next();
     });
 
-    // Apply CORS middleware
+    // Use only one CORS handler
     app.use(corsMiddleware);
-    app.use(cors(corsOptions));
 
     // Basic middleware
     app.use(express.json());

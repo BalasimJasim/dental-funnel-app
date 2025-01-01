@@ -6,12 +6,11 @@ export const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: "*",
+  origin: true,
   credentials: false,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept", "X-Origin"],
   optionsSuccessStatus: 204,
-  preflightContinue: false,
 };
 
 export default corsOptions;
