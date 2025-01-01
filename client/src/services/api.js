@@ -15,15 +15,15 @@ const api = axios.create({
 // Debug interceptor
 api.interceptors.request.use(
   (config) => {
-    // Ensure origin headers are set
-    const origin = window.location.origin;
-    config.headers["Origin"] = origin;
+    // Ensure URL starts with /api
+    if (!config.url.startsWith("/api") && !config.url.includes("/api/")) {
+      config.url = `/api${config.url}`;
+    }
 
     console.log("Making request:", {
       url: `${config.baseURL}${config.url}`,
       method: config.method,
       headers: config.headers,
-      origin: origin,
     });
     return config;
   },

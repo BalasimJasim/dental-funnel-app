@@ -11,4 +11,4 @@ services:
       - key: PORT
         value: "5000"
       - key: CORS_ORIGIN
-        value: "https://dental-funnel-nvoc4saot-balasim-jasim-s-projects.vercel.app"
+        value: "https://dental-funnel-n3fdtpad0-balasim-jasim-s-projects.vercel.app"
