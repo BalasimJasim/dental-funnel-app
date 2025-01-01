@@ -7,7 +7,7 @@ const Landing = ({ onStartGuidance }) => {
   const { landing } = translations;
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log("Current translations:", landing); // Debug log
+  console.log("Landing component translations:", landing);
 
   return (
     <div className={styles.container}>

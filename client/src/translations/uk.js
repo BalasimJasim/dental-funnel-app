@@ -93,3 +93,6 @@ export const ukTranslations = {
     loading: "Завантаження...",
   },
 };
+
+// Add debug log
+console.log("Loading translations:", ukTranslations);
