@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import corsOptions from "./config/corsOptions.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-import { initializeTwilioClient, testSMSConfig } from "./utils/smsService.js";
 
 // Load env vars
 dotenv.config();
@@ -14,52 +13,25 @@ const startServer = async () => {
     // Connect to MongoDB first
     await connectDB();
 
-    // Initialize and test Twilio
-    await initializeTwilioClient();
-    await testSMSConfig();
-
     const app = express();
 
-    // Enable CORS with options
+    // CORS middleware should be first
     app.use(cors(corsOptions));
 
-    // Add headers to all responses
-    app.use((req, res, next) => {
-      res.header("Access-Control-Allow-Credentials", "true");
-      res.header(
-        "Access-Control-Allow-Methods",
-        "GET, POST, PUT, DELETE, OPTIONS"
-      );
-
-      const origin = req.headers.origin;
-      if (allowedOrigins.includes(origin)) {
-        res.header("Access-Control-Allow-Origin", origin);
-      }
-
-      next();
-    });
-
-    // Basic middleware
+    // Body parser
     app.use(express.json());
 
-    // Request logging (remove CORS headers from here)
+    // Simple logging
     app.use((req, res, next) => {
-      console.log({
-        timestamp: new Date().toISOString(),
-        method: req.method,
-        url: req.url,
-        origin: req.headers.origin,
-        headers: req.headers,
-      });
+      console.log(`${req.method} ${req.url} from ${req.headers.origin}`);
       next();
     });
 
-    // Health check
+    // Routes
     app.get("/", (req, res) => {
       res.json({ status: "ok", message: "API is running" });
     });
 
-    // API routes
     app.use(
       "/api/appointments",
       (await import("./routes/appointments.js")).default
@@ -74,16 +46,8 @@ const startServer = async () => {
     app.use(errorHandler);
 
     const PORT = process.env.PORT || 5000;
-
-    const server = app.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
-      console.log("Environment:", process.env.NODE_ENV);
-    });
-
-    // Handle unhandled promise rejections
-    process.on("unhandledRejection", (err, promise) => {
-      console.log(`Error: ${err.message}`);
-      server.close(() => process.exit(1));
     });
   } catch (error) {
     console.error("Failed to start server:", error);
