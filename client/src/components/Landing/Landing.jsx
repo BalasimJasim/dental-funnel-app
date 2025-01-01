@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import styles from './Landing.module.css';
-import { ukTranslations } from "../../translations/uk";
-
-const { landing } = ukTranslations;
+import { useTranslations } from "../../context/LanguageContext";
 
 const Landing = ({ onStartGuidance }) => {
+  const translations = useTranslations();
+  const { landing } = translations;
   const [isHovered, setIsHovered] = useState(false);
+
+  console.log("Current translations:", landing); // Debug log
 
   return (
     <div className={styles.container}>

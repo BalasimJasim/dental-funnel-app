@@ -2,51 +2,35 @@ import { useState } from 'react'
 import Landing from './components/Landing/Landing'
 import Guidance from './components/Guidance/Guidance'
 import Appointment from './components/Appointment/Appointment'
+import { ukTranslations } from "./translations/uk";
 import './App.css'
 
 function App() {
-  const [currentView, setCurrentView] = useState('landing');
-  const [previousView, setPreviousView] = useState(null);
+  const [currentStep, setCurrentStep] = useState("landing");
 
   const handleStartGuidance = () => {
-    setPreviousView('landing');
-    setCurrentView('guidance');
-  };
-
-  const handleCompleteGuidance = () => {
-    setPreviousView('guidance');
-    setCurrentView('appointment');
+    setCurrentStep("guidance");
   };
 
   const handleBack = () => {
-    setCurrentView(previousView);
+    setCurrentStep("landing");
   };
 
-  const handleReturnHome = () => {
-    setCurrentView('landing');
-    setPreviousView(null);
+  const handleComplete = () => {
+    setCurrentStep("appointment");
   };
 
   return (
     <div className="app">
-      {currentView === 'landing' && (
+      {currentStep === "landing" && (
         <Landing onStartGuidance={handleStartGuidance} />
       )}
-      {currentView === 'guidance' && (
-        <Guidance 
-          onComplete={handleCompleteGuidance} 
-          onBack={handleBack}
-          onReturnHome={handleReturnHome}
-        />
+      {currentStep === "guidance" && (
+        <Guidance onComplete={handleComplete} onBack={handleBack} />
       )}
-      {currentView === 'appointment' && (
-        <Appointment 
-          onBack={handleBack}
-          onReturnHome={handleReturnHome}
-        />
-      )}
+      {currentStep === "appointment" && <Appointment onBack={handleBack} />}
     </div>
-  )
+  );
 }
 
 export default App
