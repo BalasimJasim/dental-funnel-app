@@ -16,27 +16,33 @@ const startServer = async () => {
 
     const app = express();
 
-    // Apply custom CORS middleware first
-    app.use(corsMiddleware);
-
-    // Then apply cors package middleware
-    app.use(cors(corsOptions));
-
-    // Basic middleware
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-
-    // Debug logging
+    // Debug logging middleware - before CORS
     app.use((req, res, next) => {
-      console.log("Request:", {
+      console.log("Incoming Request:", {
         timestamp: new Date().toISOString(),
         method: req.method,
         url: req.url,
         origin: req.headers.origin,
         headers: req.headers,
       });
+
+      // Log response headers after they're set
+      const oldEnd = res.end;
+      res.end = function (...args) {
+        console.log("Response Headers:", this.getHeaders());
+        oldEnd.apply(this, args);
+      };
+
       next();
     });
+
+    // Apply CORS middleware
+    app.use(corsMiddleware);
+    app.use(cors(corsOptions));
+
+    // Basic middleware
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
     // Routes
     app.get("/", (req, res) => {
