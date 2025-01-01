@@ -4,11 +4,24 @@ import App from "./App";
 import { LanguageProvider } from "./context/LanguageContext";
 import "./index.css";
 
-console.log("8. main.jsx starting");
+// Force enable console logs in production
+if (import.meta.env.PROD) {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+  
+  console.log = (...args) => {
+    originalConsoleLog.apply(console, args);
+  };
+  
+  console.error = (...args) => {
+    originalConsoleError.apply(console, args);
+  };
+}
 
-console.log("Environment:", {
+console.log("DEPLOYMENT-TEST: Application starting", {
   mode: import.meta.env.MODE,
-  apiUrl: import.meta.env.VITE_API_URL,
+  debug: import.meta.env.VITE_DEBUG,
+  apiUrl: import.meta.env.VITE_API_URL
 });
 
 class ErrorBoundary extends React.Component {

@@ -20,6 +20,7 @@
     }
   ],
   "env": {
-    "VITE_API_URL": "https://dental-funnel-app.onrender.com/api"
+    "VITE_API_URL": "https://dental-funnel-app.onrender.com/api",
+    "VITE_DEBUG": "true"
   }
 } 

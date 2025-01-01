@@ -1,33 +1,11 @@
-export const allowedOrigins = [
-  "https://dental-funnel-n3fdtpad0-balasim-jasim-s-projects.vercel.app",
-  "https://dental-funnel-nvoc4saot-balasim-jasim-s-projects.vercel.app",
-  "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
-  "https://dental-funnel-app.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:5174",
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    console.log("Checking origin:", origin);
-
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log("Blocked origin:", origin);
-      callback(new Error(`Origin ${origin} not allowed by CORS`));
-    }
-  },
-  credentials: false,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "Accept",
-    "X-Origin",
-    "Origin",
+  origin: [
+    "http://localhost:5173",
+    "https://dental-funnel-9ey33hxcq-balasim-jasim-s-projects.vercel.app",
+    "https://dental-funnel-app.vercel.app",
   ],
-  optionsSuccessStatus: 204,
+  credentials: false,
+  optionsSuccessStatus: 200,
 };
 
-export default corsOptions;
+module.exports = corsOptions;

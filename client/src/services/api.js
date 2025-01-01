@@ -1,9 +1,12 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-console.log("Environment:", {
+
+// Force console output in production
+console.log("DEPLOYMENT-TEST: API configuration", {
+  baseUrl: API_BASE_URL,
   mode: import.meta.env.MODE,
-  apiUrl: API_BASE_URL,
+  debug: import.meta.env.VITE_DEBUG
 });
 
 const api = axios.create({
