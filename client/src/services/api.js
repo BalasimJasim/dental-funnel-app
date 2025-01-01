@@ -15,15 +15,12 @@ const api = axios.create({
 // Debug interceptor
 api.interceptors.request.use(
   (config) => {
-    // Add timestamp to URL to prevent caching
-    const separator = config.url.includes("?") ? "&" : "?";
-    config.url = `${config.url}${separator}t=${Date.now()}`;
-
     console.log("Making request:", {
       url: config.url,
       method: config.method,
       headers: config.headers,
       baseURL: config.baseURL,
+      withCredentials: config.withCredentials,
     });
     return config;
   },
@@ -40,10 +37,12 @@ api.interceptors.response.use(
       console.error("Response Error:", {
         status: error.response.status,
         headers: error.response.headers,
-        data: error.response.data,
+        data: error.response.data
       });
+    } else if (error.request) {
+      console.error("Request Error:", error.request);
     } else {
-      console.error("Request Error:", error.message);
+      console.error("Error:", error.message);
     }
     return Promise.reject(error);
   }
