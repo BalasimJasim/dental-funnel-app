@@ -17,8 +17,8 @@ api.interceptors.request.use(
   (config) => {
     // Add origin header for debugging
     config.headers["X-Origin"] = window.location.origin;
+    config.headers["Origin"] = window.location.origin;
 
-    // Log full request details
     console.log("Making request:", {
       url: `${config.baseURL}${config.url}`,
       method: config.method,

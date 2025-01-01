@@ -6,7 +6,7 @@ export const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: true,
+  origin: "https://dental-funnel-krl9mmx1x-balasim-jasim-s-projects.vercel.app",
   credentials: false,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept", "X-Origin"],
