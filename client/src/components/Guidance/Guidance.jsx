@@ -3,6 +3,41 @@ import styles from './Guidance.module.css';
 import { ukTranslations } from "../../translations/uk";
 const { guidance } = ukTranslations;
 
+const questions = [
+  {
+    id: 1,
+    text: "Що вас найбільше турбує у вашій посмішці?",
+    options: [
+      {
+        id: "a1",
+        text: "Біль або дискомфорт",
+        subtext: "Позбавтеся зубного болю та болю в яснах",
+      },
+      {
+        id: "a2",
+        text: "Відсутні або пошкоджені зуби",
+        subtext: "Відновіть повноцінну посмішку",
+      },
+      {
+        id: "a3",
+        text: "Зовнішній вигляд",
+        subtext: "Покращіть естетику посмішки",
+      },
+      {
+        id: "a4",
+        text: "Криві зуби",
+        subtext: "Досягніть ідеального вирівнювання",
+      },
+      {
+        id: "a5",
+        text: "Профілактичний догляд",
+        subtext: "Підтримуйте оптимальне здоров'я ротової порожнини",
+      },
+    ],
+  },
+  // ... other questions with Ukrainian text
+];
+
 const Guidance = ({ onComplete, onBack, onReturnHome }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});

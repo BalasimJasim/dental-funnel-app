@@ -9,28 +9,29 @@ const Landing = ({ onStartGuidance }) => {
   const benefits = [
     {
       id: 1,
-      title: "Affordable Prices",
-      description: "Quality dental care that fits your budget",
-      icon: "💰", // We can replace these with proper SVG icons later
+      title: "Доступні ціни",
+      description: "Якісна стоматологічна допомога за розумною ціною",
+      icon: "💰",
     },
     {
       id: 2,
-      title: "Modern Equipment",
-      description: "State-of-the-art technology for the best results",
+      title: "Сучасне обладнання",
+      description:
+        "Використовуємо передові технології для найкращих результатів",
       icon: "🔧",
     },
     {
       id: 3,
-      title: "Experienced Dentists",
-      description: "Expert care from qualified professionals",
+      title: "Досвідчені лікарі",
+      description: "Професійна допомога від кваліфікованих спеціалістів",
       icon: "👨‍⚕️",
     },
   ];
 
   const socialProof = [
-    { id: 1, stat: "1000+", label: "Happy Patients" },
-    { id: 2, stat: "15+", label: "Years Experience" },
-    { id: 3, stat: "4.9/5", label: "Patient Rating" },
+    { id: 1, stat: "1000+", label: "Задоволених пацієнтів" },
+    { id: 2, stat: "15+", label: "Років досвіду" },
+    { id: 3, stat: "4.9/5", label: "Рейтинг пацієнтів" },
   ];
 
   return (
@@ -47,7 +48,9 @@ const Landing = ({ onStartGuidance }) => {
           >
             {landing.cta}
           </button>
-          <p className={styles.ctaSubtext}>Free consultation • No obligation</p>
+          <p className={styles.ctaSubtext}>
+            Безкоштовна консультація • Без зобов'язань
+          </p>
         </div>
       </header>
 
@@ -61,7 +64,7 @@ const Landing = ({ onStartGuidance }) => {
       </section>
 
       <section className={styles.benefits}>
-        <h2 className={styles.sectionTitle}>Why Choose Us?</h2>
+        <h2 className={styles.sectionTitle}>Чому обирають нас?</h2>
         <div className={styles.benefitsGrid}>
           {benefits.map((benefit) => (
             <div key={benefit.id} className={styles.benefitCard}>
@@ -74,7 +77,7 @@ const Landing = ({ onStartGuidance }) => {
       </section>
 
       <section className={styles.urgencyBanner}>
-        <p>Limited Time Offer: Free Initial Consultation</p>
+        <p>Спеціальна пропозиція: Безкоштовна перша консультація</p>
         <button className={styles.secondaryCta} onClick={onStartGuidance}>
           {landing.guidanceButton} →
         </button>
