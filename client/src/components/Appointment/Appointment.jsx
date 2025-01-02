@@ -23,7 +23,7 @@ const Appointment = ({ onBack }) => {
       });
       alert("Дякуємо за запис! Ми зв'яжемося з вами найближчим часом.");
     } catch (error) {
-      console.error("Error creating appointment:", error);
+      console.error("Помилка при створенні запису:", error);
       alert("Помилка при записі. Будь ласка, спробуйте ще раз.");
     }
   };

@@ -73,7 +73,7 @@ const Guidance = ({ onComplete, onBack }) => {
             className={styles.navButton}
             onClick={() => setCurrentStep((prev) => prev + 1)}
           >
-            Пропустити →
+            Далі →
           </button>
         </div>
       </div>
