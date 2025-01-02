@@ -7,36 +7,41 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
 }
 
 .hero {
-  margin: 2rem 0 3rem;
+  margin: 4rem 0;
+  animation: fadeIn 0.8s ease;
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
   font-weight: 700;
   color: #2c3e50;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  color: #666;
-  margin-bottom: 2rem;
-  max-width: 800px;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  color: #64748b;
+  margin-bottom: 3rem;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.5;
 }
 
 .emergencyBanner {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .emergencyToggle {
@@ -44,20 +49,21 @@
   border: 2px solid #e74c3c;
   color: #e74c3c;
   padding: 0.75rem 1.5rem;
-  border-radius: 25px;
+  border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.95rem;
 }
 
 .emergencyToggle:hover {
   background: #e74c3c;
   color: white;
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.2);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15);
 }
 
 .emergencyIcon {
@@ -98,63 +104,69 @@
 }
 
 .ctaContainer {
-  margin: 2rem 0;
+  margin: 2rem 0 4rem;
 }
 
 .cta {
-  background-color: #3498db;
+  background: linear-gradient(135deg, #3498db, #2980b9);
   color: white;
   border: none;
-  padding: clamp(0.875rem, 2vw, 1.25rem) clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 3rem);
   border-radius: 50px;
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
 }
 
 .ctaHovered {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-  background-color: #2980b9;
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.25);
+  background: linear-gradient(135deg, #2980b9, #2573a7);
 }
 
 .ctaSubtext {
-  color: #666;
-  font-size: 0.9rem;
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  animation: fadeIn 0.8s ease 0.4s backwards;
 }
 
 .socialProof {
   display: flex;
   justify-content: center;
   gap: clamp(2rem, 5vw, 4rem);
-  margin-top: 4rem;
-  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 4rem;
 }
 
 .statItem {
   text-align: center;
-  min-width: 200px;
   padding: 1.5rem;
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.8s ease 0.6s backwards;
 }
 
 .statItem:hover {
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
 }
 
 .statNumber {
   font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 700;
-  color: #3498db;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
 }
 
 .statLabel {
-  color: #666;
+  color: #64748b;
   font-size: clamp(0.875rem, 2vw, 1rem);
 }
 
@@ -169,13 +181,24 @@
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
 
   .hero {
-    margin: 1rem 0 2rem;
+    margin: 2rem 0;
   }
 
   .emergencyBanner {
@@ -187,15 +210,11 @@
     justify-content: center;
   }
 
-  .emergencyInfo {
-    margin: 1rem 0.5rem;
-    padding: 1rem;
-  }
-
   .socialProof {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    padding-top: 2rem;
   }
 
   .statItem {
