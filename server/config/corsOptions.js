@@ -1,11 +1,10 @@
-export const allowedOrigins = [
-  "http://localhost:5173",
-  "https://dental-funnel-9ey33hxcq-balasim-jasim-s-projects.vercel.app",
-  "https://dental-funnel-app.vercel.app",
-];
-
-export const corsOptions = {
-  origin: allowedOrigins,
-  credentials: false,
+const corsOptions = {
+  origin: [
+    "http://localhost:5174",
+    "https://dental-funnel-6jd65m7jp-balasim-jasim-s-projects.vercel.app",
+  ],
+  credentials: true,
   optionsSuccessStatus: 200,
 };
+
+module.exports = corsOptions;
