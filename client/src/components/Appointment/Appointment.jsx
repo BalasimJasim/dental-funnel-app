@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { appointmentService } from "../../services/api.js";
 import styles from "./Appointment.module.css";
 import PhoneInput from "../common/PhoneInput";
 import SuccessModal from "../common/SuccessModal";
+import { clinicardsService } from "../../services/clinicards";
 
 const TREATMENTS = {
   pain: "Термінова допомога при болю",
@@ -33,6 +34,8 @@ const Appointment = ({ onBack, assessmentAnswers }) => {
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [appointmentDetails, setAppointmentDetails] = useState(null);
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
   // Generate available times based on assessment
   const getAvailableTimes = () => {
@@ -138,6 +141,31 @@ const Appointment = ({ onBack, assessmentAnswers }) => {
     }
   };
 
+  // Fetch available slots when date changes
+  useEffect(() => {
+    const fetchAvailableSlots = async () => {
+      if (!selectedDate) return;
+
+      setIsLoadingSlots(true);
+      try {
+        const slots = await clinicardsService.getAvailableSlots(
+          selectedDate.toISOString()
+        );
+        setAvailableSlots(slots);
+      } catch (error) {
+        console.error("Error fetching slots:", error);
+        setFormErrors((prev) => ({
+          ...prev,
+          time: "Помилка завантаження доступного часу",
+        }));
+      } finally {
+        setIsLoadingSlots(false);
+      }
+    };
+
+    fetchAvailableSlots();
+  }, [selectedDate]);
+
   return (
     <div className={styles.container}>
       <button className={styles.backButton} onClick={onBack}>
@@ -205,18 +233,28 @@ const Appointment = ({ onBack, assessmentAnswers }) => {
 
         <div className={styles.formGroup}>
           <label>Оберіть час</label>
-          <select
-            value={selectedTime}
-            onChange={(e) => setSelectedTime(e.target.value)}
-            required
-          >
-            <option value="">Оберіть час</option>
-            {getAvailableTimes().map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
-          </select>
+          {isLoadingSlots ? (
+            <div className={styles.loading}>
+              Завантаження доступного часу...
+            </div>
+          ) : (
+            <select
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+              required
+              disabled={!selectedDate || isLoadingSlots}
+            >
+              <option value="">Оберіть час</option>
+              {availableSlots.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+          )}
+          {formErrors.time && (
+            <span className={styles.errorText}>{formErrors.time}</span>
+          )}
         </div>
 
         <button
