@@ -18,12 +18,30 @@ router.post("/", async (req, res) => {
   try {
     const appointmentData = req.body;
 
-    // Here you would typically save to database
-    // For now, we'll just simulate a successful response
+    // Format the date and time for SMS
+    const formattedDate = new Date(appointmentData.date).toLocaleDateString(
+      "uk-UA"
+    );
+    const formattedTime = appointmentData.time;
+
+    // Clean the phone number (remove spaces and formatting)
+    const cleanPhone = appointmentData.phone.replace(/\D/g, "");
+
+    // Prepare SMS message
+    const smsMessage = `Ваш запис підтверджено! Дата: ${formattedDate}, Час: ${formattedTime}. Дякуємо за довіру! Очікуйте на дзвінок від адміністратора.`;
+
+    // Send SMS
+    const smsSent = await sendSMS({
+      to: cleanPhone,
+      message: smsMessage,
+    });
 
     res.status(201).json({
       message: "Запис успішно створено",
       appointment: appointmentData,
+      notifications: {
+        sms: smsSent,
+      },
     });
   } catch (error) {
     console.error("Error creating appointment:", error);
