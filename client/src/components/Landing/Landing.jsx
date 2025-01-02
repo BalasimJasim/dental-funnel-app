@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Landing.module.css";
 import { ukTranslations } from "../translations/uk";
+import { logTranslationLoad } from "../debug";
 
 const Landing = ({ onStartGuidance }) => {
+  useEffect(() => {
+    logTranslationLoad("Landing component");
+    console.log("Landing translations:", {
+      hasTranslations: !!ukTranslations,
+      mainTitle: ukTranslations?.landing?.mainTitle,
+    });
+  }, []);
+
   const landing = ukTranslations.landing;
   const [isHovered, setIsHovered] = useState(false);
 

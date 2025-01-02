@@ -1,4 +1,10 @@
-// Directly export the translations without any conditions
+import { logTranslationLoad } from "../debug";
+
+logTranslationLoad("translations/uk.js");
+
+// Log the module initialization
+console.log("Initializing uk.js module");
+
 export const ukTranslations = {
   landing: {
     mainTitle: "Перетворіть Вашу Посмішку Сьогодні",
@@ -94,3 +100,9 @@ export const ukTranslations = {
     loading: "Завантаження...",
   },
 };
+
+// Verify the export
+console.log("uk.js translations loaded:", {
+  hasTranslations: !!ukTranslations,
+  mainTitle: ukTranslations?.landing?.mainTitle,
+});

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/verify-translations.js && vite build",
+    "build": "vite build && node scripts/verify-build.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
