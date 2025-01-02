@@ -2,33 +2,23 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   build: {
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name.endsWith(".css")) {
-            return "assets/css/[name].[hash][extname]";
-          }
-          return "assets/[name].[hash][extname]";
-        },
-        chunkFileNames: "assets/js/[name].[hash].js",
-        entryFileNames: "assets/js/[name].[hash].js",
-      },
-    },
-    cssCodeSplit: true,
-    cssMinify: true,
+    outDir: "dist",
+    sourcemap: mode === "development",
+    minify: "esbuild",
+    emptyOutDir: true,
   },
-  css: {
-    modules: {
-      localsConvention: "camelCase",
-      scopeBehaviour: "local",
-      generateScopedName: "[name]__[local]__[hash:base64:5]",
-    },
+  server: {
+    port: 5173,
+    strictPort: true,
+  },
+  preview: {
+    port: 4173,
+    strictPort: true,
   },
   define: {
-    __BUILD_TIMESTAMP__: JSON.stringify(new Date().toISOString()),
+    "process.env.NODE_ENV": JSON.stringify(mode),
   },
-});
+}));
