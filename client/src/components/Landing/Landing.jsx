@@ -1,23 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./Landing.module.css";
+import { CONTENT, DEFAULT_LANGUAGE } from "../../config/language";
 
 const Landing = ({ onStartGuidance }) => {
   const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    console.log("[DEBUG] Landing component mounted");
-  }, []);
-
-  // Log every render
-  console.log("[DEBUG] Landing component rendering");
+  const content = CONTENT[DEFAULT_LANGUAGE].landing;
 
   return (
     <div className={styles.container}>
       <header className={styles.hero}>
-        <h1 className={styles.title}>Перетворіть Вашу Посмішку Сьогодні</h1>
-        <p className={styles.subtitle}>
-          Отримайте індивідуальний план лікування за 3 простих кроки
-        </p>
+        <h1 className={styles.title}>{content.title}</h1>
+        <p className={styles.subtitle}>{content.subtitle}</p>
         <div className={styles.ctaContainer}>
           <button
             className={`${styles.cta} ${isHovered ? styles.ctaHovered : ""}`}
@@ -25,61 +18,33 @@ const Landing = ({ onStartGuidance }) => {
             onMouseLeave={() => setIsHovered(false)}
             onClick={onStartGuidance}
           >
-            Знайти Ідеальне Рішення
+            {content.cta}
           </button>
           <p className={styles.ctaSubtext}>
-            Безкоштовна консультація • Без зобов'язань
+            {content.consultation} • {content.noObligation}
           </p>
         </div>
       </header>
 
       <section className={styles.socialProof}>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>1000+</div>
-          <div className={styles.statLabel}>Задоволених Пацієнтів</div>
+          <div className={styles.statNumber}>
+            {content.stats.patients.number}
+          </div>
+          <div className={styles.statLabel}>{content.stats.patients.label}</div>
         </div>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>15+</div>
-          <div className={styles.statLabel}>Років Досвіду</div>
+          <div className={styles.statNumber}>
+            {content.stats.experience.number}
+          </div>
+          <div className={styles.statLabel}>
+            {content.stats.experience.label}
+          </div>
         </div>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>4.9/5</div>
-          <div className={styles.statLabel}>Рейтинг Пацієнтів</div>
+          <div className={styles.statNumber}>{content.stats.rating.number}</div>
+          <div className={styles.statLabel}>{content.stats.rating.label}</div>
         </div>
-      </section>
-
-      <section className={styles.benefits}>
-        <h2 className={styles.sectionTitle}>Чому Обирають Нас?</h2>
-        <div className={styles.benefitsGrid}>
-          <div className={styles.benefitCard}>
-            <div className={styles.benefitIcon}>💰</div>
-            <h3 className={styles.benefitTitle}>Доступні Ціни</h3>
-            <p className={styles.benefitDescription}>
-              Якісна стоматологічна допомога за розумною ціною
-            </p>
-          </div>
-          <div className={styles.benefitCard}>
-            <div className={styles.benefitIcon}>🔧</div>
-            <h3 className={styles.benefitTitle}>Сучасне Обладнання</h3>
-            <p className={styles.benefitDescription}>
-              Використовуємо передові технології для найкращих результатів
-            </p>
-          </div>
-          <div className={styles.benefitCard}>
-            <div className={styles.benefitIcon}>👨‍⚕️</div>
-            <h3 className={styles.benefitTitle}>Досвідчені Лікарі</h3>
-            <p className={styles.benefitDescription}>
-              Професійна допомога від кваліфікованих спеціалістів
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.urgencyBanner}>
-        <p>Спеціальна Пропозиція: Безкоштовна Перша Консультація</p>
-        <button className={styles.secondaryCta} onClick={onStartGuidance}>
-          Підібрати Послугу →
-        </button>
       </section>
     </div>
   );

@@ -3,21 +3,11 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    {
-      name: "debug-build",
-      configResolved(config) {
-        console.log("Build mode:", config.mode);
-        console.log("Base URL:", config.base);
-      },
-    },
-  ],
+  plugins: [react()],
   build: {
     sourcemap: true,
-    minify: false, // Temporarily disable minification for debugging
   },
   define: {
-    __DEBUG__: JSON.stringify(true),
+    "process.env.VITE_LANGUAGE": JSON.stringify("uk"),
   },
 });
