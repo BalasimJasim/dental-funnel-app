@@ -1,51 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./Landing.module.css";
-import { ukTranslations } from "../../translations/uk";
 
 const Landing = ({ onStartGuidance }) => {
-  const [landing, setLanding] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    console.log("Landing Component - Initial Mount", {
-      hasUkTranslations: !!ukTranslations,
-      translationsObject: ukTranslations,
-      mainTitle: ukTranslations?.landing?.mainTitle,
-      environment: import.meta.env.MODE,
-    });
-
-    if (!ukTranslations?.landing) {
-      console.error("Translation Error:", {
-        hasUkTranslations: !!ukTranslations,
-        hasLanding: !!ukTranslations?.landing,
-        environment: import.meta.env.MODE,
-      });
-      return;
-    }
-
-    setLanding(ukTranslations.landing);
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    console.log("Landing Component - State Update", {
-      isLoading,
-      hasLanding: !!landing,
-      currentTitle: landing?.mainTitle,
-    });
-  }, [isLoading, landing]);
-
-  if (isLoading || !landing) {
-    return <div>Завантаження...</div>;
-  }
-
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className={styles.container}>
       <header className={styles.hero}>
-        <h1 className={styles.title}>{landing.mainTitle}</h1>
-        <p className={styles.subtitle}>{landing.mainSubtitle}</p>
+        <h1 className={styles.title}>Перетворіть Вашу Посмішку Сьогодні</h1>
+        <p className={styles.subtitle}>
+          Отримайте індивідуальний план лікування за 3 простих кроки
+        </p>
         <div className={styles.ctaContainer}>
           <button
             className={`${styles.cta} ${isHovered ? styles.ctaHovered : ""}`}
@@ -53,72 +18,60 @@ const Landing = ({ onStartGuidance }) => {
             onMouseLeave={() => setIsHovered(false)}
             onClick={onStartGuidance}
           >
-            {landing.findSolution}
+            Знайти Ідеальне Рішення
           </button>
           <p className={styles.ctaSubtext}>
-            {landing.consultation} • {landing.noObligation}
+            Безкоштовна консультація • Без зобов'язань
           </p>
         </div>
       </header>
 
       <section className={styles.socialProof}>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>
-            {landing.stats.patients.number}
-          </div>
-          <div className={styles.statLabel}>{landing.stats.patients.label}</div>
+          <div className={styles.statNumber}>1000+</div>
+          <div className={styles.statLabel}>Задоволених Пацієнтів</div>
         </div>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>
-            {landing.stats.experience.number}
-          </div>
-          <div className={styles.statLabel}>
-            {landing.stats.experience.label}
-          </div>
+          <div className={styles.statNumber}>15+</div>
+          <div className={styles.statLabel}>Років Досвіду</div>
         </div>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>{landing.stats.rating.number}</div>
-          <div className={styles.statLabel}>{landing.stats.rating.label}</div>
+          <div className={styles.statNumber}>4.9/5</div>
+          <div className={styles.statLabel}>Рейтинг Пацієнтів</div>
         </div>
       </section>
 
       <section className={styles.benefits}>
-        <h2 className={styles.sectionTitle}>{landing.benefits.title}</h2>
+        <h2 className={styles.sectionTitle}>Чому Обирають Нас?</h2>
         <div className={styles.benefitsGrid}>
           <div className={styles.benefitCard}>
             <div className={styles.benefitIcon}>💰</div>
-            <h3 className={styles.benefitTitle}>
-              {landing.benefits.items.prices.title}
-            </h3>
+            <h3 className={styles.benefitTitle}>Доступні Ціни</h3>
             <p className={styles.benefitDescription}>
-              {landing.benefits.items.prices.description}
+              Якісна стоматологічна допомога за розумною ціною
             </p>
           </div>
           <div className={styles.benefitCard}>
             <div className={styles.benefitIcon}>🔧</div>
-            <h3 className={styles.benefitTitle}>
-              {landing.benefits.items.equipment.title}
-            </h3>
+            <h3 className={styles.benefitTitle}>Сучасне Обладнання</h3>
             <p className={styles.benefitDescription}>
-              {landing.benefits.items.equipment.description}
+              Використовуємо передові технології для найкращих результатів
             </p>
           </div>
           <div className={styles.benefitCard}>
             <div className={styles.benefitIcon}>👨‍⚕️</div>
-            <h3 className={styles.benefitTitle}>
-              {landing.benefits.items.doctors.title}
-            </h3>
+            <h3 className={styles.benefitTitle}>Досвідчені Лікарі</h3>
             <p className={styles.benefitDescription}>
-              {landing.benefits.items.doctors.description}
+              Професійна допомога від кваліфікованих спеціалістів
             </p>
           </div>
         </div>
       </section>
 
       <section className={styles.urgencyBanner}>
-        <p>{landing.specialOffer.title}</p>
+        <p>Спеціальна Пропозиція: Безкоштовна Перша Консультація</p>
         <button className={styles.secondaryCta} onClick={onStartGuidance}>
-          {landing.specialOffer.button} →
+          Підібрати Послугу →
         </button>
       </section>
     </div>

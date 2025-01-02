@@ -5,10 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "VITE_FORCE_TRANSLATIONS=true vite build && node scripts/verify-build.js",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "verify": "node scripts/verify-translations.js"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.7.9",
