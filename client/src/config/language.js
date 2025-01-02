@@ -1,5 +1,12 @@
 export const DEFAULT_LANGUAGE = "uk";
 
+// Debug log when this module is loaded
+console.log('[DEBUG] Loading language config:', {
+  defaultLang: DEFAULT_LANGUAGE,
+  env: process.env.VITE_LANGUAGE,
+  meta: import.meta.env.VITE_LANGUAGE,
+});
+
 export const CONTENT = {
   uk: {
     landing: {
@@ -23,5 +30,23 @@ export const CONTENT = {
         },
       },
     },
-  },
+    guidance: {
+      title: "Що вас найбільше турбує у вашій посмішці?",
+      backToHome: "← Назад",
+      step: "Крок",
+      of: "з",
+      options: {
+        pain: "Біль або Дискомфорт",
+        missing: "Відсутні або Пошкоджені Зуби",
+        appearance: "Зовнішній Вигляд",
+        crooked: "Криві Зуби",
+        preventive: "Профілактичний Догляд"
+      }
+    }
+  }
 };
+
+// Verify content is loaded
+if (!CONTENT.uk?.landing?.title) {
+  console.error('[ERROR] Ukrainian content not loaded correctly');
+}

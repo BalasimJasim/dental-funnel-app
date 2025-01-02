@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Landing.module.css";
 import { CONTENT, DEFAULT_LANGUAGE } from "../../config/language";
 
 const Landing = ({ onStartGuidance }) => {
   const [isHovered, setIsHovered] = useState(false);
   const content = CONTENT[DEFAULT_LANGUAGE].landing;
+
+  useEffect(() => {
+    // Debug log when component mounts
+    console.log("[DEBUG] Landing mounted:", {
+      hasContent: !!content,
+      title: content?.title,
+      language: DEFAULT_LANGUAGE,
+    });
+  }, [content]);
+
+  if (!content) {
+    console.error("[ERROR] Content not available in Landing");
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={styles.container}>
