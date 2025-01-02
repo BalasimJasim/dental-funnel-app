@@ -8,10 +8,14 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: undefined,
-        assetFileNames: "assets/[name].[ext]",
-        chunkFileNames: "assets/[name].js",
-        entryFileNames: "assets/[name].js",
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name.endsWith(".css")) {
+            return "assets/css/[name].[hash][extname]";
+          }
+          return "assets/[name].[hash][extname]";
+        },
+        chunkFileNames: "assets/js/[name].[hash].js",
+        entryFileNames: "assets/js/[name].[hash].js",
       },
     },
     cssCodeSplit: true,
@@ -20,6 +24,7 @@ export default defineConfig({
   css: {
     modules: {
       localsConvention: "camelCase",
+      scopeBehaviour: "local",
       generateScopedName: "[name]__[local]__[hash:base64:5]",
     },
   },

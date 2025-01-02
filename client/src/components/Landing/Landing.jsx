@@ -1,6 +1,9 @@
 import { useState } from "react";
 import styles from "./Landing.module.css";
 
+// Add console log to verify styles are loaded
+console.log("Landing styles:", styles);
+
 const Landing = ({ onStartGuidance }) => {
   const [isHovered, setIsHovered] = useState(false);
 
