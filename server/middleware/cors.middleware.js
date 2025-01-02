@@ -11,15 +11,3 @@ export const optionsMiddleware = (req, res, next) => {
   }
   next();
 };
-
-const corsOptions = {
-  origin: [
-    "https://funnel-web-bv487x04m-balasim-jasim-s-projects.vercel.app",
-    "https://funnel-web-app.vercel.app",
-    ...other origins
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-  optionsSuccessStatus: 200,
-};

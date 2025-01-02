@@ -10,6 +10,46 @@
   background: linear-gradient(to bottom, #ffffff, #f8fafc);
 }
 
+/* Add better responsive padding */
+@media (min-width: 1024px) {
+  .container {
+    padding: 3rem 4rem;
+    max-width: 1400px; /* Increased for larger screens */
+  }
+
+  .hero {
+    margin: 6rem 0;
+  }
+
+  .title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    max-width: 800px;
+  }
+
+  .socialProof {
+    margin-top: 8rem;
+    gap: 6rem;
+  }
+
+  .statItem {
+    min-width: 250px;
+    padding: 2rem;
+  }
+}
+
+/* Add specific styles for extra large screens */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1600px;
+    padding: 4rem 6rem;
+  }
+}
+
 .hero {
   margin: 4rem 0;
   animation: fadeIn 0.8s ease;

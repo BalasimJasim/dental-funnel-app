@@ -20,6 +20,9 @@ export default defineConfig(({ mode }) => ({
   server: {
     port: 5173,
     strictPort: true,
+    headers: {
+      "Cache-Control": "no-store",
+    },
   },
   preview: {
     port: 4173,
