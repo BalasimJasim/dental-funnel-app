@@ -3,48 +3,61 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hero {
-  margin-bottom: 4rem;
+  margin: 2rem 0 3rem;
 }
 
 .title {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   color: #2c3e50;
   margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
   color: #666;
   margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .emergencyBanner {
-  margin-bottom: 2rem;
-  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .emergencyToggle {
   background: none;
   border: 2px solid #e74c3c;
   color: #e74c3c;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 0 auto;
 }
 
 .emergencyToggle:hover {
   background: #e74c3c;
   color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(231, 76, 60, 0.2);
 }
 
 .emergencyIcon {
@@ -53,13 +66,14 @@
 
 .emergencyInfo {
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 1.5rem;
   background: #fff5f5;
-  border-radius: 8px;
+  border-radius: 12px;
   animation: slideDown 0.3s ease;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: 0 4px 6px rgba(231, 76, 60, 0.1);
 }
 
 .emergencyInfo h3 {
@@ -84,26 +98,24 @@
 }
 
 .ctaContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  margin: 2rem 0;
 }
 
 .cta {
   background-color: #3498db;
   color: white;
   border: none;
-  padding: 1rem 2rem;
+  padding: clamp(0.875rem, 2vw, 1.25rem) clamp(1.5rem, 4vw, 2.5rem);
   border-radius: 50px;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .ctaHovered {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
   background-color: #2980b9;
 }
 
@@ -115,16 +127,27 @@
 .socialProof {
   display: flex;
   justify-content: center;
-  gap: 4rem;
+  gap: clamp(2rem, 5vw, 4rem);
   margin-top: 4rem;
+  flex-wrap: wrap;
 }
 
 .statItem {
   text-align: center;
+  min-width: 200px;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.statItem:hover {
+  transform: translateY(-2px);
 }
 
 .statNumber {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 700;
   color: #3498db;
   margin-bottom: 0.5rem;
@@ -132,7 +155,7 @@
 
 .statLabel {
   color: #666;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 2vw, 1rem);
 }
 
 @keyframes slideDown {
@@ -151,17 +174,12 @@
     padding: 1rem;
   }
 
-  .title {
-    font-size: 2rem;
+  .hero {
+    margin: 1rem 0 2rem;
   }
 
-  .subtitle {
-    font-size: 1.2rem;
-  }
-
-  .socialProof {
-    flex-direction: column;
-    gap: 2rem;
+  .emergencyBanner {
+    padding: 0.75rem;
   }
 
   .emergencyToggle {
@@ -170,7 +188,18 @@
   }
 
   .emergencyInfo {
-    margin: 1rem;
+    margin: 1rem 0.5rem;
     padding: 1rem;
+  }
+
+  .socialProof {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .statItem {
+    width: 100%;
+    max-width: 300px;
   }
 } 
