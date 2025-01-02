@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd client && npm install && NODE_ENV=production VITE_FORCE_TRANSLATIONS=true npm run build",
+  "buildCommand": "cd client && npm install && VITE_FORCE_TRANSLATIONS=true NODE_ENV=production npm run build",
   "outputDirectory": "client/dist",
   "framework": "vite",
   "builds": [

@@ -7,19 +7,33 @@ const Landing = ({ onStartGuidance }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Landing mount - Translations check:", {
-      hasTranslations: !!ukTranslations,
+    console.log("Landing Component - Initial Mount", {
+      hasUkTranslations: !!ukTranslations,
+      translationsObject: ukTranslations,
       mainTitle: ukTranslations?.landing?.mainTitle,
+      environment: import.meta.env.MODE,
     });
 
     if (!ukTranslations?.landing) {
-      console.error("Translations missing in Landing component");
+      console.error("Translation Error:", {
+        hasUkTranslations: !!ukTranslations,
+        hasLanding: !!ukTranslations?.landing,
+        environment: import.meta.env.MODE,
+      });
       return;
     }
 
     setLanding(ukTranslations.landing);
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    console.log("Landing Component - State Update", {
+      isLoading,
+      hasLanding: !!landing,
+      currentTitle: landing?.mainTitle,
+    });
+  }, [isLoading, landing]);
 
   if (isLoading || !landing) {
     return <div>Завантаження...</div>;

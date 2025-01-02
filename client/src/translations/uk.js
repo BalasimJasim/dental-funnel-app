@@ -5,6 +5,9 @@ logTranslationLoad("translations/uk.js");
 // Log the module initialization
 console.log("Initializing uk.js module");
 
+// At the top of the file
+console.log("Loading Ukrainian translations...");
+
 // Force translations to be available in both dev and prod
 const translations = {
   landing: {
@@ -110,6 +113,13 @@ console.log("[DEBUG] uk.js - Initial load:", {
   mainTitle: translations.landing.mainTitle
 });
 
+// After the translations object
+console.log("Ukrainian translations loaded:", {
+  hasTranslations: !!translations,
+  mainTitle: translations?.landing?.mainTitle,
+  environment: import.meta.env.MODE
+});
+
 export const ukTranslations = translations;
 
 // Debug point 2: After export
@@ -117,4 +127,10 @@ console.log("[DEBUG] uk.js - After export:", {
   time: new Date().toISOString(),
   hasExport: !!ukTranslations,
   mainTitle: ukTranslations.landing.mainTitle
+});
+
+// After export
+console.log("Translations exported:", {
+  hasExport: !!ukTranslations,
+  mainTitle: ukTranslations?.landing?.mainTitle
 });
