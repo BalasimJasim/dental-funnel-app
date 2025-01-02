@@ -1,10 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const { corsOptions } = require("./config/corsOptions");
-const corsMiddleware = require("./middleware/cors.middleware");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db.js");
-const { errorHandler } = require("./middleware/errorHandler.js");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { corsOptions } from "./config/corsOptions.js";
+import { corsMiddleware } from "./middleware/cors.middleware.js";
+import { connectDB } from "./config/db.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+import appointmentsRouter from "./routes/appointments.js";
+import servicesRouter from "./routes/services.js";
+import guidanceRouter from "./routes/guidance.js";
 
 // Load env vars
 dotenv.config();
@@ -41,9 +44,9 @@ const startServer = async () => {
       res.json({ status: "ok", message: "API is running" });
     });
 
-    app.use("/api/appointments", require("./routes/appointments.js").default);
-    app.use("/api/services", require("./routes/services.js").default);
-    app.use("/api/service-guidance", require("./routes/guidance.js").default);
+    app.use("/api/appointments", appointmentsRouter);
+    app.use("/api/services", servicesRouter);
+    app.use("/api/service-guidance", guidanceRouter);
 
     // Error Handler
     app.use(errorHandler);
@@ -52,7 +55,7 @@ const startServer = async () => {
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log("Environment:", process.env.NODE_ENV);
-      console.log("Allowed origins:", corsOptions.allowedOrigins);
+      console.log("Allowed origins:", corsOptions.origin);
     });
 
     process.on("unhandledRejection", (err, promise) => {

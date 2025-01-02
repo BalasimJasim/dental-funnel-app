@@ -1,6 +1,6 @@
-const { allowedOrigins } = require("../config/corsOptions.js");
+import { allowedOrigins } from "../config/corsOptions.js";
 
-function corsMiddleware(req, res, next) {
+export const corsMiddleware = (req, res, next) => {
   const origin = req.headers.origin;
 
   if (allowedOrigins.includes(origin)) {
@@ -16,6 +16,4 @@ function corsMiddleware(req, res, next) {
   }
 
   next();
-}
-
-module.exports = corsMiddleware;
+};
