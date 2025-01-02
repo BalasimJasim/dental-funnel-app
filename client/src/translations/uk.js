@@ -5,7 +5,8 @@ logTranslationLoad("translations/uk.js");
 // Log the module initialization
 console.log("Initializing uk.js module");
 
-export const ukTranslations = {
+// Force translations to be available in both dev and prod
+const translations = {
   landing: {
     mainTitle: "Перетворіть Вашу Посмішку Сьогодні",
     mainSubtitle: "Отримайте індивідуальний план лікування за 3 простих кроки",
@@ -101,8 +102,19 @@ export const ukTranslations = {
   },
 };
 
-// Verify the export
-console.log("uk.js translations loaded:", {
-  hasTranslations: !!ukTranslations,
-  mainTitle: ukTranslations?.landing?.mainTitle,
+// Debug point 1: Initial load
+console.log("[DEBUG] uk.js - Initial load:", {
+  time: new Date().toISOString(),
+  environment: import.meta.env.MODE,
+  hasTranslations: !!translations,
+  mainTitle: translations.landing.mainTitle
+});
+
+export const ukTranslations = translations;
+
+// Debug point 2: After export
+console.log("[DEBUG] uk.js - After export:", {
+  time: new Date().toISOString(),
+  hasExport: !!ukTranslations,
+  mainTitle: ukTranslations.landing.mainTitle
 });
