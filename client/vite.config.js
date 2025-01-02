@@ -6,10 +6,12 @@ export default defineConfig({
   plugins: [react()],
   build: {
     sourcemap: true,
-    minify: "esbuild",
-    terserOptions: {
-      compress: {
-        drop_console: false,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        assetFileNames: "assets/[name].[ext]",
+        chunkFileNames: "assets/[name].js",
+        entryFileNames: "assets/[name].js",
       },
     },
   },
