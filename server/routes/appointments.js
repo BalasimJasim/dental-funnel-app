@@ -16,6 +16,8 @@ router.get('/available-slots/:date', async (req, res) => {
 // Book an appointment
 router.post("/", async (req, res) => {
   try {
+    console.log("Received appointment request:", req.body);
+
     const appointmentData = req.body;
 
     // Format the date and time for SMS
@@ -36,11 +38,17 @@ router.post("/", async (req, res) => {
       time: formattedTime,
     });
 
-    // Send SMS
-    const smsSent = await sendSMS({
-      to: cleanPhone,
-      message: smsMessage,
-    });
+    // Send SMS with better error handling
+    let smsSent = false;
+    try {
+      smsSent = await sendSMS({
+        to: cleanPhone,
+        message: smsMessage,
+      });
+    } catch (smsError) {
+      console.error("SMS sending failed:", smsError);
+      // Continue with the appointment creation even if SMS fails
+    }
 
     console.log("SMS sending result:", smsSent);
 
@@ -56,6 +64,7 @@ router.post("/", async (req, res) => {
     res.status(500).json({
       message: "Помилка при створенні запису",
       error: error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 });

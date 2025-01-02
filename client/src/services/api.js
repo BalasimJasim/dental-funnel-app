@@ -33,9 +33,9 @@ api.interceptors.request.use(
 export const appointmentService = {
   async create(appointmentData) {
     try {
-      // Add timeout to fetch
+      // Increase timeout to 15 seconds
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
 
       const response = await fetch(`${API_BASE_URL}/appointments`, {
         method: "POST",
@@ -59,11 +59,11 @@ export const appointmentService = {
     } catch (error) {
       console.error("API Error:", error);
       if (error.name === 'AbortError') {
-        throw new Error("Сервер не відповідає. Спробуйте пізніше.");
+        throw new Error("Сервер тимчасово перевантажений. Будь ласка, спробуйте за хвилину.");
       }
       if (error.message === "Failed to fetch") {
         throw new Error(
-          "Не вдалося з'єднатися з сервером. Перевірте чи запущений сервер."
+          "Не вдалося з'єднатися з сервером. Перевірте підключення до інтернету."
         );
       }
       throw error;
