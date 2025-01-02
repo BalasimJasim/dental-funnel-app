@@ -1,5 +1,3 @@
-const CLINICARDS_API_URL = import.meta.env.VITE_CLINICARDS_API_URL;
-
 export const clinicardsService = {
   async getAvailableSlots(date) {
     try {
