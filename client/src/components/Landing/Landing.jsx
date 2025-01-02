@@ -1,32 +1,28 @@
 import { useState, useEffect } from "react";
 import styles from "./Landing.module.css";
-import { ukTranslations } from "../translations/uk";
+import { ukTranslations } from "../../translations/uk";
 
 const Landing = ({ onStartGuidance }) => {
   const [landing, setLanding] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Debug point 3: Component mount
-    console.log("[DEBUG] Landing - Mount:", {
-      time: new Date().toISOString(),
-      environment: import.meta.env.MODE,
+    console.log("Landing mount - Translations check:", {
       hasTranslations: !!ukTranslations,
       mainTitle: ukTranslations?.landing?.mainTitle,
     });
 
+    if (!ukTranslations?.landing) {
+      console.error("Translations missing in Landing component");
+      return;
+    }
+
     setLanding(ukTranslations.landing);
+    setIsLoading(false);
   }, []);
 
-  // Debug point 4: Render
-  console.log("[DEBUG] Landing - Render:", {
-    time: new Date().toISOString(),
-    hasLanding: !!landing,
-    mainTitle: landing?.mainTitle,
-  });
-
-  if (!landing) {
-    console.error("[DEBUG] Landing - Missing translations");
-    return <div>Loading...</div>;
+  if (isLoading || !landing) {
+    return <div>Завантаження...</div>;
   }
 
   const [isHovered, setIsHovered] = useState(false);

@@ -2,26 +2,28 @@ import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { ukTranslations } from "../translations/uk";
 
-// Force translations to be available immediately
+// Force translations to be available immediately and log the process
+console.log("Initializing LanguageContext...", {
+  environment: import.meta.env.MODE,
+  hasTranslations: !!ukTranslations
+});
+
 const TRANSLATIONS = ukTranslations;
 
 // Verify translations at context creation
 if (!TRANSLATIONS?.landing?.mainTitle) {
-  console.error("Translation check failed:", {
-    hasTranslations: !!TRANSLATIONS,
-    hasLanding: !!TRANSLATIONS?.landing,
-    environment: import.meta.env.MODE,
-  });
-  throw new Error("Translations not available at context creation");
+  console.error("Critical: Translations missing at context creation");
+  throw new Error("TRANSLATIONS_MISSING");
 }
 
-const LanguageContext = createContext(TRANSLATIONS);
+const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
-  // Log the environment and translations state
-  if (import.meta.env.PROD) {
-    console.log("Provider running in production mode");
-  }
+  // Force translations check on provider mount
+  console.log("LanguageProvider mounting...", {
+    hasTranslations: !!TRANSLATIONS?.landing?.mainTitle,
+    mainTitle: TRANSLATIONS?.landing?.mainTitle
+  });
 
   return (
     <LanguageContext.Provider value={TRANSLATIONS}>
