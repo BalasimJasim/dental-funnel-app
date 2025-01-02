@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import styles from './Guidance.module.css';
 import { ukTranslations } from "../../translations/uk";
+console.log("Guidance Component - Loading translations:", {
+  hasTranslations: !!ukTranslations,
+  guidanceSection: ukTranslations?.guidance,
+});
+
+if (!ukTranslations?.guidance) {
+  console.error("Missing guidance translations!");
+}
+
 const { guidance } = ukTranslations;
 
 const questions = [

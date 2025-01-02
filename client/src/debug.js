@@ -1,11 +1,7 @@
-export function logTranslationLoad(location) {
-  console.log(
-    `[${location}] Loading translations at:`,
-    new Date().toISOString()
-  );
-  console.log(`[${location}] Environment:`, {
-    NODE_ENV: process.env.NODE_ENV,
-    MODE: import.meta.env.MODE,
-    BASE_URL: import.meta.env.BASE_URL,
+export const logTranslationLoad = (module) => {
+  console.log(`[DEBUG] Loading translations from ${module}`, {
+    time: new Date().toISOString(),
+    environment: import.meta.env.MODE,
+    forceTranslations: import.meta.env.VITE_FORCE_TRANSLATIONS,
   });
-}
+};
