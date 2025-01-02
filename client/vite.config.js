@@ -12,11 +12,8 @@ export default defineConfig(({ mode }) => {
       minify: true,
     },
     define: {
-      __TRANSLATIONS_ENABLED__: true,
-      // Force production to use the same behavior as development
+      "import.meta.env.VITE_FORCE_TRANSLATIONS": JSON.stringify(true),
       "process.env.NODE_ENV": JSON.stringify(mode),
-      "import.meta.env.PROD": mode === "production",
-      "import.meta.env.DEV": mode === "development",
     },
   };
 });
