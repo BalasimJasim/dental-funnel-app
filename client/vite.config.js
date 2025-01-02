@@ -7,4 +7,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
   },
+  define: {
+    __BUILD_TIMESTAMP__: JSON.stringify(new Date().toISOString()),
+  },
 });

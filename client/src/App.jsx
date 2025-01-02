@@ -4,10 +4,14 @@ import Guidance from "./components/Guidance/Guidance";
 import Appointment from "./components/Appointment/Appointment";
 import "./App.css";
 
+const APP_VERSION = "1.0.1";
+
 function App() {
   const [currentStep, setCurrentStep] = useState("landing");
 
   useEffect(() => {
+    console.log("[DEBUG] Build timestamp:", __BUILD_TIMESTAMP__);
+    console.log("[DEBUG] App version:", APP_VERSION);
     console.log("[DEBUG] App mounted, currentStep:", currentStep);
   }, []);
 
