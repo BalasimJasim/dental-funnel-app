@@ -1,23 +1,5 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
-  "framework": "vite",
-  "github": {
-    "enabled": true,
-    "silent": true
-  },
-  "cleanUrls": true,
-  "installCommand": "cd client && npm install",
-  "builds": [
-    {
-      "src": "client/package.json",
-      "use": "@vercel/static-build"
-    }
-  ]
+  "framework": "vite"
 } 
