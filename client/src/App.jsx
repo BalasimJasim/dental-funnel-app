@@ -1,11 +1,20 @@
-import { useState } from 'react'
-import Landing from './components/Landing/Landing'
-import Guidance from './components/Guidance/Guidance'
+import { useState, useEffect } from "react";
+import Landing from "./components/Landing/Landing";
+import Guidance from "./components/Guidance/Guidance";
 import Appointment from "./components/Appointment/Appointment";
 import "./App.css";
 
 function App() {
   const [currentStep, setCurrentStep] = useState("landing");
+
+  useEffect(() => {
+    console.log("[DEBUG] App mounted, currentStep:", currentStep);
+  }, []);
+
+  // Log state changes
+  useEffect(() => {
+    console.log("[DEBUG] Current step changed to:", currentStep);
+  }, [currentStep]);
 
   const handleStartGuidance = () => {
     setCurrentStep("guidance");
@@ -32,4 +41,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

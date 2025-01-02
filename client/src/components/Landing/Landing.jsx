@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Landing.module.css";
 
 const Landing = ({ onStartGuidance }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    console.log("[DEBUG] Landing component mounted");
+  }, []);
+
+  // Log every render
+  console.log("[DEBUG] Landing component rendering");
 
   return (
     <div className={styles.container}>
