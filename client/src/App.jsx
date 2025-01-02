@@ -5,12 +5,14 @@ import Appointment from "./components/Appointment/Appointment";
 import "./App.css";
 
 const APP_VERSION = "1.0.1";
+// Get build timestamp from Vite define
+const BUILD_TIMESTAMP = __BUILD_TIMESTAMP__;
 
 function App() {
   const [currentStep, setCurrentStep] = useState("landing");
 
   useEffect(() => {
-    console.log("[DEBUG] Build timestamp:", __BUILD_TIMESTAMP__);
+    console.log("[DEBUG] Build timestamp:", BUILD_TIMESTAMP);
     console.log("[DEBUG] App version:", APP_VERSION);
     console.log("[DEBUG] App mounted, currentStep:", currentStep);
   }, []);
