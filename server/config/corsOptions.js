@@ -2,6 +2,7 @@ const corsOptions = {
   origin: [
     "http://localhost:5174",
     "https://dental-funnel-6jd65m7jp-balasim-jasim-s-projects.vercel.app",
+    "https://funnel-web-app.vercel.app",
   ],
   credentials: true,
   optionsSuccessStatus: 200,
