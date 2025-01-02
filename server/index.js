@@ -1,16 +1,14 @@
 import express from "express";
-import {
-  corsMiddleware,
-  optionsMiddleware,
-} from "./middleware/cors.middleware.js";
+import cors from 'cors';
+import corsOptions from "./config/corsOptions.js";
 import appointmentsRouter from "./routes/appointments.js";
 
 const app = express();
 
-// Apply CORS middleware
-app.use(corsMiddleware);
-app.use(optionsMiddleware);
+// Apply CORS before any routes
+app.use(cors(corsOptions));
 
+// Parse JSON bodies
 app.use(express.json());
 
 // Routes
