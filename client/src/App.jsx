@@ -10,6 +10,7 @@ const BUILD_TIMESTAMP = __BUILD_TIMESTAMP__;
 
 function App() {
   const [currentStep, setCurrentStep] = useState("landing");
+  const [assessmentAnswers, setAssessmentAnswers] = useState(null);
 
   useEffect(() => {
     console.log("[DEBUG] Build timestamp:", BUILD_TIMESTAMP);
@@ -28,9 +29,11 @@ function App() {
 
   const handleBack = () => {
     setCurrentStep("landing");
+    setAssessmentAnswers(null);
   };
 
-  const handleComplete = () => {
+  const handleComplete = (answers) => {
+    setAssessmentAnswers(answers);
     setCurrentStep("appointment");
   };
 
@@ -42,7 +45,12 @@ function App() {
       {currentStep === "guidance" && (
         <Guidance onComplete={handleComplete} onBack={handleBack} />
       )}
-      {currentStep === "appointment" && <Appointment onBack={handleBack} />}
+      {currentStep === "appointment" && (
+        <Appointment
+          onBack={handleBack}
+          assessmentAnswers={assessmentAnswers}
+        />
+      )}
     </div>
   );
 }

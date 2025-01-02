@@ -1,0 +1,91 @@
+.summary {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.mainConcern,
+.timeline,
+.nextSteps {
+  margin-bottom: 2rem;
+}
+
+.mainConcern h3,
+.timeline h3,
+.nextSteps h3 {
+  color: #2c3e50;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.nextSteps ol {
+  padding-left: 1.2rem;
+  color: #666;
+}
+
+.nextSteps li {
+  margin-bottom: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.backButton,
+.confirmButton {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.backButton {
+  background: none;
+  border: 1px solid #666;
+  color: #666;
+}
+
+.confirmButton {
+  background: #3498db;
+  border: none;
+  color: white;
+}
+
+.backButton:hover {
+  background: #f5f5f5;
+}
+
+.confirmButton:hover {
+  background: #2980b9;
+}
+
+@media (max-width: 768px) {
+  .summary {
+    padding: 1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .backButton,
+  .confirmButton {
+    width: 100%;
+  }
+} 

@@ -1,52 +1,142 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { appointmentService } from "../../services/api.js";
 import styles from "./Appointment.module.css";
+import PhoneInput from "../common/PhoneInput";
+import SuccessModal from "../common/SuccessModal";
 
-const Appointment = ({ onBack }) => {
+const TREATMENTS = {
+  pain: "Термінова допомога при болю",
+  missing: "Протезування зубів",
+  aesthetic: "Естетична стоматологія",
+  alignment: "Ортодонтія",
+  prevention: "Профілактичний огляд",
+};
+
+const Appointment = ({ onBack, assessmentAnswers }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    service: "",
+    service: assessmentAnswers ? TREATMENTS[assessmentAnswers[1]] : "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    phone: "",
+    date: "",
+    time: "",
+  });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [appointmentDetails, setAppointmentDetails] = useState(null);
+
+  // Generate available times based on assessment
+  const getAvailableTimes = () => {
+    const isUrgent =
+      assessmentAnswers &&
+      (assessmentAnswers[1] === "pain" || assessmentAnswers[2] === "recent");
+
+    if (isUrgent) {
+      return [
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "12:30",
+        "14:00",
+        "14:30",
+        "15:00",
+        "15:30",
+        "16:00",
+        "16:30",
+        "17:00",
+      ];
+    }
+
+    return [
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "14:00",
+      "15:00",
+      "16:00",
+      "17:00",
+    ];
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    // Name validation
+    if (formData.name.trim().length < 2) {
+      errors.name = "Ім'я повинно містити мінімум 2 символи";
+    }
+
+    // Phone validation
+    const phoneRegex = /^\+380 \d{2} \d{3} \d{4}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      errors.phone = "Введіть коректний номер телефону";
+    }
+
+    // Date validation
+    if (!selectedDate) {
+      errors.date = "Оберіть дату";
+    }
+
+    // Time validation
+    if (!selectedTime) {
+      errors.time = "Оберіть час";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError("");
+
     try {
-      await appointmentService.create({
+      const appointmentData = {
         date: selectedDate,
         time: selectedTime,
-        ...formData,
+        name: formData.name,
+        phone: formData.phone,
+        service: formData.service,
+        assessmentAnswers,
+      };
+
+      await appointmentService.create(appointmentData);
+
+      setAppointmentDetails({
+        date: selectedDate,
+        time: selectedTime,
+        service: formData.service,
       });
-      alert("Дякуємо за запис! Ми зв'яжемося з вами найближчим часом.");
+      setShowSuccessModal(true);
     } catch (error) {
       console.error("Помилка при створенні запису:", error);
-      alert("Помилка при записі. Будь ласка, спробуйте ще раз.");
+      setSubmitError(
+        error.message || "Помилка при записі. Будь ласка, спробуйте ще раз."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
-  const availableTimes = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-  ];
-
-  const services = [
-    "Консультація",
-    "Професійна чистка",
-    "Пломбування",
-    "Відбілювання",
-    "Лікування карієсу",
-    "Видалення зуба",
-  ];
 
   return (
     <div className={styles.container}>
@@ -56,6 +146,15 @@ const Appointment = ({ onBack }) => {
 
       <h2 className={styles.title}>Запис на прийом</h2>
 
+      {assessmentAnswers && (
+        <div className={styles.assessment}>
+          <h3>Рекомендований план</h3>
+          <p>{TREATMENTS[assessmentAnswers[1]]}</p>
+        </div>
+      )}
+
+      {submitError && <div className={styles.error}>{submitError}</div>}
+
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
           <label htmlFor="name">Ім'я</label>
@@ -64,22 +163,31 @@ const Appointment = ({ onBack }) => {
             id="name"
             required
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={(e) => {
+              setFormData({ ...formData, name: e.target.value });
+              if (formErrors.name) {
+                setFormErrors({ ...formErrors, name: "" });
+              }
+            }}
             placeholder="Введіть ваше ім'я"
+            className={formErrors.name ? styles.invalid : ""}
           />
+          {formErrors.name && (
+            <span className={styles.errorText}>{formErrors.name}</span>
+          )}
         </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="phone">Телефон</label>
-          <input
-            type="tel"
-            id="phone"
-            required
+          <PhoneInput
             value={formData.phone}
-            onChange={(e) =>
-              setFormData({ ...formData, phone: e.target.value })
-            }
-            placeholder="+380"
+            onChange={(value) => {
+              setFormData({ ...formData, phone: value });
+              if (formErrors.phone) {
+                setFormErrors({ ...formErrors, phone: "" });
+              }
+            }}
+            required
           />
         </div>
 
@@ -103,7 +211,7 @@ const Appointment = ({ onBack }) => {
             required
           >
             <option value="">Оберіть час</option>
-            {availableTimes.map((time) => (
+            {getAvailableTimes().map((time) => (
               <option key={time} value={time}>
                 {time}
               </option>
@@ -111,30 +219,31 @@ const Appointment = ({ onBack }) => {
           </select>
         </div>
 
-        <div className={styles.formGroup}>
-          <label>Оберіть послугу</label>
-          <select
-            value={formData.service}
-            onChange={(e) =>
-              setFormData({ ...formData, service: e.target.value })
-            }
-            required
-          >
-            <option value="">Оберіть послугу</option>
-            {services.map((service) => (
-              <option key={service} value={service}>
-                {service}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <button type="submit" className={styles.submitButton}>
-          Записатися
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Обробка..." : "Записатися"}
         </button>
       </form>
+
+      {showSuccessModal && (
+        <SuccessModal
+          appointmentDetails={appointmentDetails}
+          onClose={() => {
+            setShowSuccessModal(false);
+            onBack();
+          }}
+        />
+      )}
     </div>
   );
+};
+
+Appointment.propTypes = {
+  onBack: PropTypes.func.isRequired,
+  assessmentAnswers: PropTypes.objectOf(PropTypes.string),
 };
 
 export default Appointment;

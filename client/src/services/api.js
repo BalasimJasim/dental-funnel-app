@@ -40,6 +40,7 @@ export const appointmentService = {
         },
         body: JSON.stringify(appointmentData),
         credentials: "include",
+        mode: "cors",
       });
 
       if (!response.ok) {
