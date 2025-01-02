@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [react()],
   build: {
     sourcemap: true,
+    minify: "esbuild",
+    terserOptions: {
+      compress: {
+        drop_console: false,
+      },
+    },
   },
   define: {
     __BUILD_TIMESTAMP__: JSON.stringify(new Date().toISOString()),
