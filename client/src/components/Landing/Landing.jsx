@@ -1,30 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./Landing.module.css";
-import { CONTENT, DEFAULT_LANGUAGE } from "../../config/language";
 
 const Landing = ({ onStartGuidance }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const content = CONTENT[DEFAULT_LANGUAGE].landing;
-
-  useEffect(() => {
-    // Debug log when component mounts
-    console.log("[DEBUG] Landing mounted:", {
-      hasContent: !!content,
-      title: content?.title,
-      language: DEFAULT_LANGUAGE,
-    });
-  }, [content]);
-
-  if (!content) {
-    console.error("[ERROR] Content not available in Landing");
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className={styles.container}>
       <header className={styles.hero}>
-        <h1 className={styles.title}>{content.title}</h1>
-        <p className={styles.subtitle}>{content.subtitle}</p>
+        <h1 className={styles.title}>Перетворіть Вашу Посмішку Сьогодні</h1>
+        <p className={styles.subtitle}>
+          Отримайте індивідуальний план лікування за 3 простих кроки
+        </p>
         <div className={styles.ctaContainer}>
           <button
             className={`${styles.cta} ${isHovered ? styles.ctaHovered : ""}`}
@@ -32,32 +18,26 @@ const Landing = ({ onStartGuidance }) => {
             onMouseLeave={() => setIsHovered(false)}
             onClick={onStartGuidance}
           >
-            {content.cta}
+            Знайти Ідеальне Рішення
           </button>
           <p className={styles.ctaSubtext}>
-            {content.consultation} • {content.noObligation}
+            Безкоштовна консультація • Без зобов'язань
           </p>
         </div>
       </header>
 
       <section className={styles.socialProof}>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>
-            {content.stats.patients.number}
-          </div>
-          <div className={styles.statLabel}>{content.stats.patients.label}</div>
+          <div className={styles.statNumber}>1000+</div>
+          <div className={styles.statLabel}>Задоволених Пацієнтів</div>
         </div>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>
-            {content.stats.experience.number}
-          </div>
-          <div className={styles.statLabel}>
-            {content.stats.experience.label}
-          </div>
+          <div className={styles.statNumber}>15+</div>
+          <div className={styles.statLabel}>Років Досвіду</div>
         </div>
         <div className={styles.statItem}>
-          <div className={styles.statNumber}>{content.stats.rating.number}</div>
-          <div className={styles.statLabel}>{content.stats.rating.label}</div>
+          <div className={styles.statNumber}>4.9/5</div>
+          <div className={styles.statLabel}>Рейтинг Пацієнтів</div>
         </div>
       </section>
     </div>
