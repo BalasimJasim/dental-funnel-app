@@ -9,6 +9,13 @@ export default defineConfig(({ mode }) => ({
     sourcemap: mode === "development",
     minify: "esbuild",
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+        },
+      },
+    },
   },
   server: {
     port: 5173,
