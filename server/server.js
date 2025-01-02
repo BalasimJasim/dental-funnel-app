@@ -1,10 +1,10 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import corsOptions, { allowedOrigins } from "./config/corsOptions.js";
-import { corsMiddleware } from "./middleware/cors.middleware.js";
-import { errorHandler } from "./middleware/errorHandler.js";
+const express = require("express");
+const cors = require("cors");
+const { corsOptions } = require("./config/corsOptions");
+const corsMiddleware = require("./middleware/cors.middleware");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db.js");
+const { errorHandler } = require("./middleware/errorHandler.js");
 
 // Load env vars
 dotenv.config();
@@ -30,6 +30,7 @@ const startServer = async () => {
 
     // Use only one CORS handler
     app.use(corsMiddleware);
+    app.use(cors(corsOptions));
 
     // Basic middleware
     app.use(express.json());
@@ -40,15 +41,9 @@ const startServer = async () => {
       res.json({ status: "ok", message: "API is running" });
     });
 
-    app.use(
-      "/api/appointments",
-      (await import("./routes/appointments.js")).default
-    );
-    app.use("/api/services", (await import("./routes/services.js")).default);
-    app.use(
-      "/api/service-guidance",
-      (await import("./routes/guidance.js")).default
-    );
+    app.use("/api/appointments", require("./routes/appointments.js").default);
+    app.use("/api/services", require("./routes/services.js").default);
+    app.use("/api/service-guidance", require("./routes/guidance.js").default);
 
     // Error Handler
     app.use(errorHandler);
@@ -57,7 +52,7 @@ const startServer = async () => {
     const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       console.log("Environment:", process.env.NODE_ENV);
-      console.log("Allowed origins:", allowedOrigins);
+      console.log("Allowed origins:", corsOptions.allowedOrigins);
     });
 
     process.on("unhandledRejection", (err, promise) => {
@@ -70,4 +65,4 @@ const startServer = async () => {
   }
 };
 
-startServer(); 
+startServer();
