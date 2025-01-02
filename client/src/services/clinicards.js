@@ -3,14 +3,16 @@ const CLINICARDS_API_URL = import.meta.env.VITE_CLINICARDS_API_URL;
 export const clinicardsService = {
   async getAvailableSlots(date) {
     try {
-      // This is a placeholder until we have the actual Clinicards API credentials
+      // For now, return default slots since API isn't ready
+      return getDefaultSlots();
+
+      // Uncomment this when API is ready
+      /*
       const response = await fetch(
         `${CLINICARDS_API_URL}/available-slots?date=${date}`,
         {
           headers: {
             "Content-Type": "application/json",
-            // Add authorization headers when available
-            // "Authorization": `Bearer ${CLINICARDS_API_KEY}`
           },
         }
       );
@@ -21,15 +23,14 @@ export const clinicardsService = {
 
       const data = await response.json();
       return data.slots;
+      */
     } catch (error) {
       console.error("Error fetching available slots:", error);
-      // Return default slots for now
       return getDefaultSlots();
     }
   },
 };
 
-// Temporary function to provide default slots until Clinicards integration
 const getDefaultSlots = () => {
   const defaultSlots = [
     "09:00",

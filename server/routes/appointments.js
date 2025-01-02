@@ -24,17 +24,25 @@ router.post("/", async (req, res) => {
     );
     const formattedTime = appointmentData.time;
 
-    // Clean the phone number (remove spaces and formatting)
+    // Clean the phone number
     const cleanPhone = appointmentData.phone.replace(/\D/g, "");
 
     // Prepare SMS message
     const smsMessage = `Ваш запис підтверджено! Дата: ${formattedDate}, Час: ${formattedTime}. Дякуємо за довіру! Очікуйте на дзвінок від адміністратора.`;
+
+    console.log("Attempting to send SMS:", {
+      phone: cleanPhone,
+      date: formattedDate,
+      time: formattedTime,
+    });
 
     // Send SMS
     const smsSent = await sendSMS({
       to: cleanPhone,
       message: smsMessage,
     });
+
+    console.log("SMS sending result:", smsSent);
 
     res.status(201).json({
       message: "Запис успішно створено",

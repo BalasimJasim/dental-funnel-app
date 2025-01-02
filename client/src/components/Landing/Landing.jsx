@@ -1,63 +1,55 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import styles from "./Landing.module.css";
 
-// Add console log to verify styles are loaded
-console.log("Landing styles:", styles);
-
 const Landing = ({ onStartGuidance }) => {
+  const [showEmergency, setShowEmergency] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [isEmergency, setIsEmergency] = useState(false);
 
   return (
     <div className={styles.container}>
-      {/* Emergency Banner */}
       <div className={styles.emergencyBanner}>
         <button
           className={styles.emergencyToggle}
-          onClick={() => setIsEmergency(!isEmergency)}
+          onClick={() => setShowEmergency(!showEmergency)}
         >
-          🚨 Потрібна термінова допомога?
+          <span className={styles.emergencyIcon}>🚨</span>
+          Потрібна термінова допомога?
         </button>
-        {isEmergency && (
+        {showEmergency && (
           <div className={styles.emergencyInfo}>
-            <h3>Невідкладна допомога</h3>
+            <h3>Термінова стоматологічна допомога</h3>
             <p>
-              Телефонуйте зараз:{" "}
-              <a href="tel:+380123456789">+38 (012) 345-67-89</a>
+              Ми розуміємо, що зубний біль не може чекати. Зателефонуйте нам
+              прямо зараз:
             </p>
-            <p>Ми готові допомогти 24/7</p>
+            <a href="tel:+380123456789">+38 (012) 345-67-89</a>
           </div>
         )}
       </div>
 
-      <header className={styles.hero}>
+      <div className={styles.hero}>
         <h1 className={styles.title}>Перетворіть Вашу Посмішку Сьогодні</h1>
         <p className={styles.subtitle}>
           Отримайте індивідуальний план лікування за 3 простих кроки
         </p>
-        <div className={styles.ctaContainer}>
-          <button
-            className={`${styles.cta} ${isHovered ? styles.ctaHovered : ""}`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onClick={onStartGuidance}
-          >
-            Знайти Ідеальне Рішення
-          </button>
-          <p className={styles.ctaSubtext}>
-            Безкоштовна консультація • Без зобов'язань
-          </p>
-        </div>
-      </header>
+      </div>
 
-      {/* Trust Indicators */}
-      <section className={styles.trustIndicators}>
-        <div className={styles.indicator}>✓ Сучасне обладнання</div>
-        <div className={styles.indicator}>✓ Досвідчені спеціалісти</div>
-        <div className={styles.indicator}>✓ Безболісне лікування</div>
-      </section>
+      <div className={styles.ctaContainer}>
+        <button
+          className={`${styles.cta} ${isHovered ? styles.ctaHovered : ""}`}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={onStartGuidance}
+        >
+          Знайти Ідеальне Рішення
+        </button>
+        <p className={styles.ctaSubtext}>
+          Безкоштовна консультація • Без зобов'язань
+        </p>
+      </div>
 
-      <section className={styles.socialProof}>
+      <div className={styles.socialProof}>
         <div className={styles.statItem}>
           <div className={styles.statNumber}>1000+</div>
           <div className={styles.statLabel}>Задоволених Пацієнтів</div>
@@ -70,9 +62,13 @@ const Landing = ({ onStartGuidance }) => {
           <div className={styles.statNumber}>4.9/5</div>
           <div className={styles.statLabel}>Рейтинг Пацієнтів</div>
         </div>
-      </section>
+      </div>
     </div>
   );
+};
+
+Landing.propTypes = {
+  onStartGuidance: PropTypes.func.isRequired,
 };
 
 export default Landing;

@@ -1,57 +1,48 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Layout from "./components/Layout/Layout";
 import Landing from "./components/Landing/Landing";
 import Guidance from "./components/Guidance/Guidance";
 import Appointment from "./components/Appointment/Appointment";
-import "./App.css";
+import styles from "./App.module.css";
 
-const APP_VERSION = "1.0.1";
-// Get build timestamp from Vite define
-const BUILD_TIMESTAMP = __BUILD_TIMESTAMP__;
-
-function App() {
+function App({ isStandalone = true }) {
   const [currentStep, setCurrentStep] = useState("landing");
-  const [assessmentAnswers, setAssessmentAnswers] = useState(null);
-
-  useEffect(() => {
-    console.log("[DEBUG] Build timestamp:", BUILD_TIMESTAMP);
-    console.log("[DEBUG] App version:", APP_VERSION);
-    console.log("[DEBUG] App mounted, currentStep:", currentStep);
-  }, []);
-
-  // Log state changes
-  useEffect(() => {
-    console.log("[DEBUG] Current step changed to:", currentStep);
-  }, [currentStep]);
+  const [assessmentAnswers, setAssessmentAnswers] = useState({});
 
   const handleStartGuidance = () => {
     setCurrentStep("guidance");
   };
 
-  const handleBack = () => {
-    setCurrentStep("landing");
-    setAssessmentAnswers(null);
-  };
-
-  const handleComplete = (answers) => {
+  const handleGuidanceComplete = (answers) => {
     setAssessmentAnswers(answers);
     setCurrentStep("appointment");
   };
 
+  const handleBack = () => {
+    if (currentStep === "guidance") {
+      setCurrentStep("landing");
+    } else if (currentStep === "appointment") {
+      setCurrentStep("guidance");
+    }
+  };
+
   return (
-    <div className="app">
-      {currentStep === "landing" && (
-        <Landing onStartGuidance={handleStartGuidance} />
-      )}
-      {currentStep === "guidance" && (
-        <Guidance onComplete={handleComplete} onBack={handleBack} />
-      )}
-      {currentStep === "appointment" && (
-        <Appointment
-          onBack={handleBack}
-          assessmentAnswers={assessmentAnswers}
-        />
-      )}
-    </div>
+    <Layout isStandalone={isStandalone}>
+      <div className={styles.app}>
+        {currentStep === "landing" && (
+          <Landing onStartGuidance={handleStartGuidance} />
+        )}
+        {currentStep === "guidance" && (
+          <Guidance onComplete={handleGuidanceComplete} onBack={handleBack} />
+        )}
+        {currentStep === "appointment" && (
+          <Appointment
+            assessmentAnswers={assessmentAnswers}
+            onBack={handleBack}
+          />
+        )}
+      </div>
+    </Layout>
   );
 }
 

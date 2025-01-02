@@ -123,12 +123,21 @@ const Appointment = ({ onBack, assessmentAnswers }) => {
         assessmentAnswers,
       };
 
-      await appointmentService.create(appointmentData);
+      const response = await appointmentService.create(appointmentData);
+
+      // Check if SMS was sent
+      if (response.notifications?.sms === false) {
+        console.warn("SMS notification failed to send");
+        // You might want to show a warning to the user
+      }
 
       setAppointmentDetails({
         date: selectedDate,
         time: selectedTime,
-        service: formData.service,
+        service:
+          formData.service ||
+          TREATMENTS[assessmentAnswers[1]] ||
+          "Консультація",
       });
       setShowSuccessModal(true);
     } catch (error) {

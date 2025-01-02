@@ -22,6 +22,67 @@
   margin-bottom: 2rem;
 }
 
+.emergencyBanner {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.emergencyToggle {
+  background: none;
+  border: 2px solid #e74c3c;
+  color: #e74c3c;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+}
+
+.emergencyToggle:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+.emergencyIcon {
+  font-size: 1.2rem;
+}
+
+.emergencyInfo {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #fff5f5;
+  border-radius: 8px;
+  animation: slideDown 0.3s ease;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.emergencyInfo h3 {
+  color: #e74c3c;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.emergencyInfo p {
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.emergencyInfo a {
+  color: #e74c3c;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.emergencyInfo a:hover {
+  text-decoration: underline;
+}
+
 .ctaContainer {
   display: flex;
   flex-direction: column;
@@ -74,66 +135,6 @@
   font-size: 1rem;
 }
 
-.emergencyBanner {
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.emergencyToggle {
-  background: none;
-  border: 2px solid #e74c3c;
-  color: #e74c3c;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.emergencyToggle:hover {
-  background: #e74c3c;
-  color: white;
-}
-
-.emergencyInfo {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: #fff5f5;
-  border-radius: 8px;
-  animation: slideDown 0.3s ease;
-}
-
-.emergencyInfo h3 {
-  color: #e74c3c;
-  margin-bottom: 0.5rem;
-}
-
-.emergencyInfo a {
-  color: #e74c3c;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.trustIndicators {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin: 2rem 0;
-  flex-wrap: wrap;
-}
-
-.indicator {
-  color: #2c3e50;
-  font-size: 1.1rem;
-  padding: 0.5rem 1rem;
-  background: #f8f9fa;
-  border-radius: 6px;
-  transition: transform 0.2s ease;
-}
-
-.indicator:hover {
-  transform: translateY(-2px);
-}
-
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -146,6 +147,10 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
   .title {
     font-size: 2rem;
   }
@@ -159,9 +164,13 @@
     gap: 2rem;
   }
 
-  .trustIndicators {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  .emergencyToggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .emergencyInfo {
+    margin: 1rem;
+    padding: 1rem;
   }
 } 

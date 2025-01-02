@@ -33,15 +33,20 @@ api.interceptors.request.use(
 export const appointmentService = {
   async create(appointmentData) {
     try {
+      // Add timeout to fetch
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
       const response = await fetch(`${API_BASE_URL}/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(appointmentData),
-        credentials: "include",
-        mode: "cors",
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({
@@ -53,9 +58,12 @@ export const appointmentService = {
       return await response.json();
     } catch (error) {
       console.error("API Error:", error);
+      if (error.name === 'AbortError') {
+        throw new Error("Сервер не відповідає. Спробуйте пізніше.");
+      }
       if (error.message === "Failed to fetch") {
         throw new Error(
-          "Не вдалося з'єднатися з сервером. Перевірте підключення до інтернету."
+          "Не вдалося з'єднатися з сервером. Перевірте чи запущений сервер."
         );
       }
       throw error;

@@ -1,0 +1,40 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainHeader {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mainNav {
+  padding: 1rem;
+  background: #f8fafc;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.mainNav a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.mainNav a:hover {
+  color: #3498db;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+.mainFooter {
+  background: #2c3e50;
+  color: white;
+  padding: 2rem;
+} 
