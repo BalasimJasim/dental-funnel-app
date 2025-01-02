@@ -1,11 +1,12 @@
 const corsOptions = {
-  origin: [
-    "http://localhost:5174",
-    "https://dental-funnel-6jd65m7jp-balasim-jasim-s-projects.vercel.app",
-    "https://funnel-web-app.vercel.app",
-  ],
+  origin:
+    process.env.NODE_ENV === "production"
+      ? ["https://funnel-web-app.vercel.app"]
+      : ["http://localhost:5173", "http://localhost:5174"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
   optionsSuccessStatus: 200,
 };
 
-module.exports = corsOptions;
+export default corsOptions;

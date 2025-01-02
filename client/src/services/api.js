@@ -2,12 +2,7 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-// Force console output in production
-console.log("DEPLOYMENT-TEST: API configuration", {
-  baseUrl: API_BASE_URL,
-  mode: import.meta.env.MODE,
-  debug: import.meta.env.VITE_DEBUG
-});
+console.log("API Base URL:", API_BASE_URL); // Debug log
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -36,13 +31,33 @@ api.interceptors.request.use(
 
 // Create the appointment service
 export const appointmentService = {
-  bookAppointment: async (appointmentData) => {
+  async create(appointmentData) {
     try {
-      const response = await api.post("/appointments", appointmentData);
-      return { success: true, data: response.data };
+      const response = await fetch(`${API_BASE_URL}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(appointmentData),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({
+          message: "Невідома помилка сервера",
+        }));
+        throw new Error(errorData.message || "Помилка при створенні запису");
+      }
+
+      return await response.json();
     } catch (error) {
       console.error("API Error:", error);
-      return { success: false, error };
+      if (error.message === "Failed to fetch") {
+        throw new Error(
+          "Не вдалося з'єднатися з сервером. Перевірте підключення до інтернету."
+        );
+      }
+      throw error;
     }
   },
 
