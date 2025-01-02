@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import styles from "./SuccessModal.module.css";
 
 const SuccessModal = ({ onClose, appointmentDetails }) => {
+  const { date, time, service = "Консультація" } = appointmentDetails;
+
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -9,14 +11,13 @@ const SuccessModal = ({ onClose, appointmentDetails }) => {
         <h2>Запис Підтверджено!</h2>
         <div className={styles.details}>
           <p>
-            <strong>Дата:</strong>{" "}
-            {appointmentDetails.date.toLocaleDateString("uk-UA")}
+            <strong>Дата:</strong> {date.toLocaleDateString("uk-UA")}
           </p>
           <p>
-            <strong>Час:</strong> {appointmentDetails.time}
+            <strong>Час:</strong> {time}
           </p>
           <p>
-            <strong>Послуга:</strong> {appointmentDetails.service}
+            <strong>Послуга:</strong> {service}
           </p>
         </div>
         <p className={styles.message}>
@@ -38,7 +39,7 @@ SuccessModal.propTypes = {
   appointmentDetails: PropTypes.shape({
     date: PropTypes.instanceOf(Date).isRequired,
     time: PropTypes.string.isRequired,
-    service: PropTypes.string.isRequired,
+    service: PropTypes.string,
   }).isRequired,
 };
 

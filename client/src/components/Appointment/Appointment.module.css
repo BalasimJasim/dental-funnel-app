@@ -1,143 +1,13 @@
 .container {
   max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-.appointmentCard {
-  background: white;
+  margin: 0 auto;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.progress {
-  color: #4a5568;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.dateSelection,
-.timeSelection,
-.contactForm,
-.confirmation {
-  text-align: center;
-}
-
-.dateSelection h2,
-.timeSelection h2,
-.contactForm h2,
-.confirmation h2 {
-  font-size: 1.5rem;
-  color: #2d3748;
+.title {
+  font-size: 2rem;
+  color: #2c3e50;
   margin-bottom: 1.5rem;
-}
-
-.dateInput {
-  padding: 0.75rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-  width: 100%;
-  max-width: 300px;
-}
-
-.timeGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.timeButton {
-  background: #f7fafc;
-  border: 2px solid #e2e8f0;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.timeButton:hover {
-  background: #edf2f7;
-  border-color: #4299e1;
-}
-
-.timeButton.selected {
-  background: #4299e1;
-  border-color: #4299e1;
-  color: white;
-}
-
-.formGroup {
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-
-.formGroup label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #4a5568;
-  font-size: 0.875rem;
-}
-
-.formGroup input,
-.formGroup textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.formGroup input:focus,
-.formGroup textarea:focus {
-  outline: none;
-  border-color: #4299e1;
-}
-
-.submitButton,
-.newAppointmentButton {
-  background: #4299e1;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
-  width: 100%;
-}
-
-.submitButton:hover,
-.newAppointmentButton:hover {
-  background: #3182ce;
-}
-
-.confirmation {
-  text-align: center;
-  padding: 2rem 0;
-}
-
-.confirmation p {
-  margin: 1rem 0;
-  color: #4a5568;
-}
-
-/* Responsive Design */
-@media (min-width: 640px) {
-  .timeGrid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Add these new styles */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
 }
 
 .backButton {
@@ -157,187 +27,35 @@
   color: #4299e1;
 }
 
-.navigationTop {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+.form {
+  display: grid;
+  gap: 1.5rem;
 }
 
-.homeButton {
-  padding: 0.5rem 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 6px;
-  background: transparent;
-  color: #4a5568;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.875rem;
-  font-weight: 500;
+.formGroup {
+  margin-bottom: 1.5rem;
 }
 
-.homeButton:hover {
-  border-color: #4299e1;
-  color: #4299e1;
-}
-
-/* Add these styles */
-.loadingOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.loadingSpinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #4299e1;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-.errorMessage {
-  color: #e53e3e;
-  background: #fff5f5;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.successMessage {
-  color: #38a169;
-  background: #f0fff4;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.hint {
-  color: #666;
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
+.formGroup label {
   display: block;
-}
-
-.input:invalid {
-  border-color: #e53e3e;
-}
-
-.input:invalid + .hint {
-  color: #e53e3e;
-}
-
-.datePickerWrapper {
-  margin: 0 auto;
-  max-width: 350px;
-}
-
-.datePickerWrapper :global(.react-datepicker) {
-  width: 100%;
-  border: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: inherit;
-}
-
-.datePickerWrapper :global(.react-datepicker__month-container) {
-  width: 100%;
-  float: none;
-}
-
-.datePickerWrapper :global(.react-datepicker__header) {
-  background-color: #fff;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 1rem;
-}
-
-.datePickerWrapper :global(.react-datepicker__current-month) {
-  color: #2d3748;
-  font-size: 1.1rem;
-  font-weight: 600;
   margin-bottom: 0.5rem;
+  color: #4a5568;
+  font-size: 1rem;
 }
 
-.datePickerWrapper :global(.react-datepicker__day-name) {
-  color: #718096;
-  width: 2.5rem;
-  margin: 0.2rem;
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.datePickerWrapper :global(.react-datepicker__day) {
-  width: 2.5rem;
-  height: 2.5rem;
-  line-height: 2.5rem;
-  margin: 0.2rem;
-  border-radius: 50%;
-  color: #2d3748;
-}
-
-.datePickerWrapper :global(.react-datepicker__day:hover) {
-  background-color: #edf2f7;
-}
-
-.datePickerWrapper :global(.react-datepicker__day--selected) {
-  background-color: #4299e1;
-  color: white;
-}
-
-.datePickerWrapper :global(.react-datepicker__day--disabled) {
-  color: #cbd5e0;
-  cursor: not-allowed;
-}
-
-.datePickerWrapper :global(.react-datepicker__navigation) {
-  top: 1rem;
-}
-
-.datePickerWrapper :global(.react-datepicker__navigation--previous) {
-  left: 1rem;
-  border: none;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232d3748'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 19l-7-7 7-7'/%3E%3C/svg%3E") no-repeat center;
-  width: 24px;
-  height: 24px;
-}
-
-.datePickerWrapper :global(.react-datepicker__navigation--next) {
-  right: 1rem;
-  border: none;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232d3748'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'/%3E%3C/svg%3E") no-repeat center;
-  width: 24px;
-  height: 24px;
-}
-
-.datePickerWrapper :global(.react-datepicker__day--today) {
-  font-weight: bold;
-  color: #4299e1;
-}
-
-.datePickerWrapper :global(.react-datepicker__month) {
-  margin: 0.5rem;
-}
-
-/* Add responsive styles */
-@media (max-width: 480px) {
-  .datePickerWrapper :global(.react-datepicker__day),
-  .datePickerWrapper :global(.react-datepicker__day-name) {
-    width: 2rem;
-    height: 2rem;
-    line-height: 2rem;
-    margin: 0.1rem;
-  }
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: #4299e1;
 }
 
 .assessment {
@@ -365,11 +83,6 @@
   margin-bottom: 1rem;
 }
 
-.submitButton:disabled {
-  background-color: #94a3b8;
-  cursor: not-allowed;
-}
-
 .submitButton {
   width: 100%;
   padding: 1rem;
@@ -386,15 +99,22 @@
   background-color: #2980b9;
 }
 
-.loading {
-  padding: 0.75rem;
-  background: #f7f7f7;
-  border-radius: 8px;
-  color: #666;
-  text-align: center;
+.submitButton:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
 }
 
-select:disabled {
-  background: #f7f7f7;
-  cursor: not-allowed;
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .backButton {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .assessment {
+    padding: 0.75rem;
+  }
 } 
