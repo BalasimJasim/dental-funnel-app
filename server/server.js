@@ -12,8 +12,22 @@ import guidanceRouter from "./routes/guidance.js";
 // Load env vars
 dotenv.config();
 
+// Verify environment variables
+const requiredEnvVars = ['MONGO_URI', 'NODE_ENV'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  console.error('Missing required environment variables:', missingEnvVars);
+  process.exit(1);
+}
+
 const startServer = async () => {
   try {
+    console.log('Environment variables loaded:', {
+      NODE_ENV: process.env.NODE_ENV,
+      MONGO_URI: process.env.MONGO_URI ? '[DEFINED]' : '[MISSING]'
+    });
+
     // Connect to MongoDB first
     await connectDB();
 
