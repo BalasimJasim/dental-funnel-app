@@ -3,126 +3,121 @@ import { useState } from "react";
 import Summary from "./Summary";
 import styles from "./Guidance.module.css";
 
-const QUESTIONS = [
-  {
-    id: 1,
+const QUESTIONS = {
+  1: {
     title: "Що вас найбільше турбує у вашій посмішці?",
     options: [
       {
-        id: "missing_single",
+        id: "missing_one",
         title: "Відсутній один зуб",
         subtext: "Імплант або міст на сусідніх зубах",
-        priority: "high",
       },
       {
         id: "missing_multiple",
         title: "Відсутні декілька зубів",
         subtext: "Імпланти, міст або частковий протез",
-        priority: "high",
       },
       {
-        id: "full_jaw",
+        id: "missing_all",
         title: "Повна відсутність зубів",
         subtext: "All-on-X або повний знімний протез",
-        priority: "high",
-      },
-      {
-        id: "bridge_option",
-        title: "Потрібен міст на зубах",
-        subtext: "Відновлення зубів без імплантації",
-        priority: "medium",
-      },
-      {
-        id: "denture_option",
-        title: "Потрібен знімний протез",
-        subtext: "Класичне знімне протезування",
-        priority: "medium",
-      },
-      {
-        id: "unstable_denture",
-        title: "Незручний знімний протез",
-        subtext: "Покращення фіксації протеза",
-        priority: "medium",
       },
       {
         id: "pain",
         title: "Біль або Дискомфорт",
         subtext: "Негайна допомога при зубному болю",
-        priority: "high",
-      },
-      {
-        id: "aesthetic",
-        title: "Естетичні проблеми",
-        subtext: "Покращення зовнішнього вигляду",
-        priority: "low",
       },
     ],
   },
-  {
-    id: 2,
-    title: "Як давно у вас ця проблема?",
+
+  // Questions for single missing tooth
+  missing_one: {
+    title: "Як давно відсутній зуб?",
     options: [
       {
-        id: "recent",
-        title: "Нещодавно втратив зуб",
+        id: "recent_loss",
+        title: "Нещодавно втратив",
         subtext: "Можливість негайної імплантації",
       },
       {
-        id: "months",
-        title: "Кілька місяців",
-        subtext: "Оптимальний час для імплантації",
+        id: "months_ago",
+        title: "Кілька місяців тому",
+        subtext: "Стандартна імплантація",
       },
       {
-        id: "years",
+        id: "years_ago",
         title: "Більше року",
         subtext: "Можлива потреба в нарощуванні кістки",
       },
+    ],
+  },
+
+  // Questions for multiple missing teeth
+  missing_multiple: {
+    title: "Які зуби відсутні?",
+    options: [
       {
-        id: "long_term",
-        title: "Багато років",
+        id: "front_teeth",
+        title: "Передні зуби",
+        subtext: "Естетично важлива зона",
+      },
+      {
+        id: "back_teeth",
+        title: "Жувальні зуби",
+        subtext: "Відновлення жувальної функції",
+      },
+      {
+        id: "mixed",
+        title: "Різні ділянки",
         subtext: "Комплексне відновлення",
       },
     ],
-    showFor: [
-      "missing_single",
-      "missing_multiple",
-      "full_jaw",
-      "unstable_denture",
-    ],
   },
-  {
-    id: 3,
-    title: "Що для вас найважливіше у лікуванні?",
+
+  // Questions for complete tooth loss
+  missing_all: {
+    title: "Що для вас найважливіше?",
     options: [
       {
-        id: "quality",
-        title: "Якість і Довговічність",
-        subtext: "Преміум імпланти з гарантією",
+        id: "fixed_solution",
+        title: "Незнімна конструкція",
+        subtext: "All-on-X імплантація",
       },
       {
-        id: "speed",
-        title: "Швидкість лікування",
-        subtext: "Протокол негайного навантаження",
+        id: "removable",
+        title: "Знімний протез",
+        subtext: "Класичне знімне протезування",
       },
       {
-        id: "comfort",
-        title: "Комфорт лікування",
-        subtext: "Седація та безболісні процедури",
-      },
-      {
-        id: "price",
+        id: "affordable",
         title: "Доступна ціна",
-        subtext: "Економ варіанти та розстрочка",
+        subtext: "Економ варіанти протезування",
       },
-    ],
-    showFor: [
-      "missing_single",
-      "missing_multiple",
-      "full_jaw",
-      "unstable_denture",
     ],
   },
-];
+
+  // Questions for pain/discomfort
+  pain: {
+    title: "Характер болю?",
+    options: [
+      {
+        id: "acute_pain",
+        title: "Гострий біль",
+        subtext: "Потрібна термінова допомога",
+      },
+      {
+        id: "chronic_pain",
+        title: "Хронічний біль",
+        subtext: "Планове лікування",
+      },
+      {
+        id: "sensitivity",
+        title: "Чутливість",
+        subtext: "Діагностика та профілактика",
+      },
+    ],
+  },
+};
 
 // Add treatment recommendations based on answers
 const TREATMENT_RECOMMENDATIONS = {
@@ -346,3 +341,5 @@ Guidance.propTypes = {
 };
 
 export default Guidance;
+
+
