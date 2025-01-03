@@ -194,6 +194,12 @@ const TREATMENT_RECOMMENDATIONS = {
   },
 };
 
+const STEP_TITLES = [
+  "Що вас найбільше турбує у вашій посмішці?",
+  "Як давно у вас ця проблема?",
+  "Що для вас найважливіше у лікуванні?",
+];
+
 const Guidance = ({ onComplete, onBack }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState({});
@@ -248,6 +254,23 @@ const Guidance = ({ onComplete, onBack }) => {
     setCurrentStep(QUESTIONS.length);
   };
 
+  const renderStepTitles = () => {
+    return (
+      <div className={styles.stepTitles}>
+        {STEP_TITLES.map((title, index) => (
+          <div
+            key={index}
+            className={`${styles.stepTitle} ${
+              currentStep === index + 1 ? styles.activeTitle : ""
+            }`}
+          >
+            {title}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   if (showSummary) {
     return (
       <Summary
@@ -280,29 +303,12 @@ const Guidance = ({ onComplete, onBack }) => {
                   } ${i + 1 < currentStep ? styles.completed : ""}`}
                   disabled={i + 1 > currentStep}
                   aria-label={`Крок ${i + 1}`}
-                  title={QUESTIONS[i].title}
                 >
                   {i + 1}
                 </button>
               ))}
             </div>
-            <div className={styles.progressText}>
-              Крок {currentStep} з {QUESTIONS.length}
-            </div>
           </div>
-        </div>
-
-        <div className={styles.stepTitles}>
-          {QUESTIONS.map((q, i) => (
-            <div
-              key={i}
-              className={`${styles.stepTitle} ${
-                i + 1 === currentStep ? styles.activeTitle : ""
-              }`}
-            >
-              {q.title}
-            </div>
-          ))}
         </div>
 
         <div className={styles.progressBar}>
@@ -312,32 +318,7 @@ const Guidance = ({ onComplete, onBack }) => {
           />
         </div>
 
-        <div className={styles.navigation}>
-          {currentStep > 1 && (
-            <button
-              className={styles.navButton}
-              onClick={handleStepBack}
-              aria-label="Попереднє питання"
-            >
-              ← Назад
-            </button>
-          )}
-          {answers[currentStep] && currentStep < QUESTIONS.length && (
-            <button
-              className={styles.navButton}
-              onClick={() => handleOptionSelect(answers[currentStep])}
-              aria-label="Наступне питання"
-            >
-              Далі →
-            </button>
-          )}
-        </div>
-
-        <div
-          className={`${styles.questionContent} ${
-            isTransitioning ? styles.fadeOut : styles.fadeIn
-          }`}
-        >
+        <div className={styles.questionContent}>
           <h2 className={styles.questionTitle}>{currentQuestion.title}</h2>
           <div className={styles.options}>
             {currentQuestion.options.map((option) => (

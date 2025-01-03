@@ -177,18 +177,11 @@ const Appointment = ({ onBack, onComplete, assessmentAnswers }) => {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backButton} onClick={onBack}>
+      <button onClick={onBack} className={styles.backButton}>
         ← Назад
       </button>
 
       <h2 className={styles.title}>Запис на прийом</h2>
-
-      {assessmentAnswers && (
-        <div className={styles.assessment}>
-          <h3>Рекомендований план</h3>
-          <p>{TREATMENTS[assessmentAnswers[1]]}</p>
-        </div>
-      )}
 
       {submitError && <div className={styles.error}>{submitError}</div>}
 

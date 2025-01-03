@@ -36,12 +36,7 @@ const Landing = ({ onStartGuidance }) => {
       </div>
 
       <div className={styles.ctaContainer}>
-        <button
-          className={`${styles.cta} ${isHovered ? styles.ctaHovered : ""}`}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onClick={onStartGuidance}
-        >
+        <button onClick={onStartGuidance} className={styles.cta}>
           Знайти Ідеальне Рішення
         </button>
         <p className={styles.ctaSubtext}>

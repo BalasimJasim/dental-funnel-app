@@ -1,63 +1,115 @@
 .container {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
   text-align: center;
+  font-weight: 600;
 }
 
 .backButton {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.75rem;
+  background: none;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.backButton:hover {
+  border-color: #3498db;
+  color: #3498db;
 }
 
 .form {
-  gap: 1rem;
+  display: grid;
+  gap: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .formGroup {
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .formGroup label {
-  font-size: 0.95rem;
-  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  color: #2c3e50;
+  font-weight: 500;
 }
 
 .formGroup input,
 .formGroup select {
+  width: 100%;
   padding: 0.75rem;
-  font-size: 0.95rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
-/* Tablet and up */
-@media (min-width: 768px) {
+.formGroup input:focus,
+.formGroup select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 1px #3498db;
+}
+
+.submitButton {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+}
+
+.submitButton:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
   .container {
-    padding: 2rem;
+    padding: 1rem;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .backButton {
-    width: auto;
+    width: 100%;
+    margin-bottom: 1.5rem;
   }
 
   .form {
     gap: 1.5rem;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .container {
-    padding: 3rem;
   }
 } 
