@@ -322,6 +322,15 @@ const Guidance = ({ onComplete, onBack }) => {
               ← Назад
             </button>
           )}
+          {answers[currentStep] && currentStep < QUESTIONS.length && (
+            <button
+              className={styles.navButton}
+              onClick={() => handleOptionSelect(answers[currentStep])}
+              aria-label="Наступне питання"
+            >
+              Далі →
+            </button>
+          )}
         </div>
 
         <div
