@@ -23,9 +23,36 @@ const QUESTIONS = {
         subtext: "All-on-X або повний знімний протез",
       },
       {
+        id: "aesthetic",
+        title: "Естетичні проблеми",
+        subtext: "Колір, форма або положення зубів",
+      },
+      {
         id: "pain",
         title: "Біль або Дискомфорт",
         subtext: "Негайна допомога при зубному болю",
+      },
+    ],
+  },
+
+  // Add questions for aesthetic concerns
+  aesthetic: {
+    title: "Що саме вас турбує в естетиці посмішки?",
+    options: [
+      {
+        id: "color",
+        title: "Колір зубів",
+        subtext: "Професійне відбілювання або вініри",
+      },
+      {
+        id: "shape",
+        title: "Форма або розмір зубів",
+        subtext: "Вініри або художня реставрація",
+      },
+      {
+        id: "alignment",
+        title: "Положення зубів",
+        subtext: "Елайнери або брекети",
       },
     ],
   },
@@ -187,6 +214,17 @@ const TREATMENT_RECOMMENDATIONS = {
       "Можливість подальшої модифікації",
     ],
   },
+  aesthetic_solution: {
+    title: "Естетична стоматологія",
+    description:
+      "Комплексний підхід до покращення естетики посмішки з використанням сучасних методик.",
+    benefits: [
+      "Індивідуальний дизайн посмішки",
+      "Збереження природних зубів",
+      "Довготривалий результат",
+      "Мінімально інвазивні процедури",
+    ],
+  },
 };
 
 const STEP_TITLES = [
@@ -195,13 +233,28 @@ const STEP_TITLES = [
   "Що для вас найважливіше у лікуванні?",
 ];
 
+const getTotalSteps = () => {
+  // First step + number of branching questions based on first answer
+  return 3; // Keep it fixed at 3 steps as in the mockup
+};
+
 const Guidance = ({ onComplete, onBack }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState({});
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [currentQuestionKey, setCurrentQuestionKey] = useState("1");
 
-  const currentQuestion = QUESTIONS[currentStep - 1];
+  // Get current question based on previous answers
+  const getCurrentQuestion = () => {
+    if (currentStep === 1) return QUESTIONS["1"];
+
+    // Get previous answer to determine next question
+    const prevAnswer = answers[currentStep - 1];
+    return QUESTIONS[prevAnswer] || null;
+  };
+
+  const currentQuestion = getCurrentQuestion();
 
   const handleStepBack = () => {
     if (currentStep > 1) {
@@ -227,12 +280,15 @@ const Guidance = ({ onComplete, onBack }) => {
 
   const handleOptionSelect = (optionId) => {
     setAnswers((prev) => ({ ...prev, [currentStep]: optionId }));
-
-    // Add a small delay for animation
     setIsTransitioning(true);
+
     setTimeout(() => {
-      if (currentStep < QUESTIONS.length) {
+      // Check if there's a next question for this answer
+      const nextQuestion = QUESTIONS[optionId];
+
+      if (nextQuestion) {
         setCurrentStep((prev) => prev + 1);
+        setCurrentQuestionKey(optionId);
       } else {
         setShowSummary(true);
       }
@@ -246,7 +302,8 @@ const Guidance = ({ onComplete, onBack }) => {
 
   const handleSummaryBack = () => {
     setShowSummary(false);
-    setCurrentStep(QUESTIONS.length);
+    setCurrentStep((prev) => prev);
+    setCurrentQuestionKey(answers[currentStep - 1]);
   };
 
   const renderStepTitles = () => {
@@ -289,7 +346,7 @@ const Guidance = ({ onComplete, onBack }) => {
           </button>
           <div className={styles.progress}>
             <div className={styles.steps}>
-              {Array.from({ length: QUESTIONS.length }, (_, i) => (
+              {Array.from({ length: getTotalSteps() }, (_, i) => (
                 <button
                   key={i}
                   onClick={() => handleStepClick(i + 1)}
@@ -309,26 +366,30 @@ const Guidance = ({ onComplete, onBack }) => {
         <div className={styles.progressBar}>
           <div
             className={styles.progressFill}
-            style={{ width: `${(currentStep / QUESTIONS.length) * 100}%` }}
+            style={{ width: `${(currentStep / getTotalSteps()) * 100}%` }}
           />
         </div>
 
         <div className={styles.questionContent}>
-          <h2 className={styles.questionTitle}>{currentQuestion.title}</h2>
-          <div className={styles.options}>
-            {currentQuestion.options.map((option) => (
-              <button
-                key={option.id}
-                className={`${styles.optionButton} ${
-                  answers[currentStep] === option.id ? styles.selected : ""
-                }`}
-                onClick={() => handleOptionSelect(option.id)}
-              >
-                {option.title}
-                <span className={styles.subtext}>{option.subtext}</span>
-              </button>
-            ))}
-          </div>
+          {currentQuestion && (
+            <>
+              <h2 className={styles.questionTitle}>{currentQuestion.title}</h2>
+              <div className={styles.options}>
+                {currentQuestion.options.map((option) => (
+                  <button
+                    key={option.id}
+                    className={`${styles.optionButton} ${
+                      answers[currentStep] === option.id ? styles.selected : ""
+                    }`}
+                    onClick={() => handleOptionSelect(option.id)}
+                  >
+                    {option.title}
+                    <span className={styles.subtext}>{option.subtext}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
