@@ -1,6 +1,6 @@
 const corsOptions = {
   origin: [
-    "https://funnel-web-28ivxyhak-balasim-jasim-s-projects.vercel.app",
+    "https://funnel-web-6cfxjy389-balasim-jasim-s-projects.vercel.app",
     "https://funnel-web-app.vercel.app",
     "http://localhost:5173",
     "http://localhost:5174",
