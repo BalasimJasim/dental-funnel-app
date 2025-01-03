@@ -1,91 +1,195 @@
-.summary {
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.summaryCard {
+  background: white;
+  border-radius: 16px;
   padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.backButton {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.backButton:hover {
+  background: #f1f5f9;
+  color: #334155;
 }
 
 .title {
-  font-size: 1.8rem;
-  color: #2c3e50;
+  font-size: 2rem;
+  color: #1e293b;
   margin-bottom: 2rem;
   text-align: center;
+  font-weight: 600;
 }
 
-.card {
-  background: white;
+.recommendation {
+  margin-bottom: 2rem;
+}
+
+.recommendation h2 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.description {
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.benefits {
+  background: #f8fafc;
+  padding: 1.5rem;
   border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 }
 
-.mainConcern,
-.timeline,
-.nextSteps {
+.benefits h3 {
+  color: #2c3e50;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.benefits ul {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits li {
+  color: #475569;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.benefits li:before {
+  content: "✓";
+  color: #3498db;
+  position: absolute;
+  left: 0;
+}
+
+.timeline {
   margin-bottom: 2rem;
 }
 
-.mainConcern h3,
-.timeline h3,
-.nextSteps h3 {
+.timeline h3 {
   color: #2c3e50;
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
+.timeline p {
+  color: #475569;
+  background: #f0f9ff;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.nextSteps {
+  margin-bottom: 2rem;
+}
+
+.nextSteps h3 {
+  color: #2c3e50;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
 .nextSteps ol {
-  padding-left: 1.2rem;
-  color: #666;
+  list-style: none;
+  counter-reset: steps;
+  padding: 0;
 }
 
 .nextSteps li {
-  margin-bottom: 0.5rem;
+  color: #475569;
+  padding: 0.75rem 0;
+  padding-left: 2rem;
+  position: relative;
+  counter-increment: steps;
 }
 
-.actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+.nextSteps li:before {
+  content: counter(steps);
+  color: #3498db;
+  font-weight: 600;
+  position: absolute;
+  left: 0;
+  width: 1.5rem;
 }
 
-.backButton,
 .confirmButton {
-  padding: 1rem 2rem;
+  width: 100%;
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem;
   border-radius: 8px;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.backButton {
-  background: none;
-  border: 1px solid #666;
-  color: #666;
-}
-
-.confirmButton {
-  background: #3498db;
-  border: none;
-  color: white;
-}
-
-.backButton:hover {
-  background: #f5f5f5;
 }
 
 .confirmButton:hover {
   background: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
 }
 
 @media (max-width: 768px) {
-  .summary {
+  .container {
+    padding: 0;
+  }
+
+  .summaryCard {
+    border-radius: 0;
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .recommendation h2 {
+    font-size: 1.25rem;
+  }
+
+  .benefits, 
+  .timeline p {
     padding: 1rem;
   }
 
-  .actions {
-    flex-direction: column;
+  .nextSteps li {
+    padding: 0.5rem 0 0.5rem 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin: 2rem auto;
+    padding: 2rem;
   }
 
-  .backButton,
-  .confirmButton {
-    width: 100%;
+  .summaryCard {
+    padding: 3rem;
   }
 } 
