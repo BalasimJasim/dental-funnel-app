@@ -226,8 +226,9 @@ const Guidance = ({ onComplete, onBack }) => {
 
   const handleOptionSelect = (optionId) => {
     setAnswers((prev) => ({ ...prev, [currentStep]: optionId }));
-    setIsTransitioning(true);
 
+    // Add a small delay for animation
+    setIsTransitioning(true);
     setTimeout(() => {
       if (currentStep < QUESTIONS.length) {
         setCurrentStep((prev) => prev + 1);
@@ -321,15 +322,6 @@ const Guidance = ({ onComplete, onBack }) => {
               ← Назад
             </button>
           )}
-          {answers[currentStep] && currentStep < QUESTIONS.length && (
-            <button
-              className={styles.navButton}
-              onClick={() => handleOptionSelect(answers[currentStep])}
-              aria-label="Наступне питання"
-            >
-              Далі →
-            </button>
-          )}
         </div>
 
         <div
@@ -338,7 +330,6 @@ const Guidance = ({ onComplete, onBack }) => {
           }`}
         >
           <h2 className={styles.questionTitle}>{currentQuestion.title}</h2>
-
           <div className={styles.options}>
             {currentQuestion.options.map((option) => (
               <button
