@@ -1,7 +1,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
   min-height: 100vh;
   display: flex;
@@ -10,68 +10,25 @@
   background: linear-gradient(to bottom, #ffffff, #f8fafc);
 }
 
-/* Add better responsive padding */
-@media (min-width: 1024px) {
-  .container {
-    padding: 3rem 4rem;
-    max-width: 1400px; /* Increased for larger screens */
-  }
-
-  .hero {
-    margin: 6rem 0;
-  }
-
-  .title {
-    font-size: 3.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .subtitle {
-    font-size: 1.5rem;
-    max-width: 800px;
-  }
-
-  .socialProof {
-    margin-top: 8rem;
-    gap: 6rem;
-  }
-
-  .statItem {
-    min-width: 250px;
-    padding: 2rem;
-  }
-}
-
-/* Add specific styles for extra large screens */
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1600px;
-    padding: 4rem 6rem;
-  }
-}
-
 .hero {
-  margin: 4rem 0;
-  animation: fadeIn 0.8s ease;
+  margin: 2rem 0;
+  padding: 0 1rem;
 }
 
 .title {
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
   font-weight: 700;
   color: #2c3e50;
-  margin-bottom: 1.5rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  line-height: 1.3;
 }
 
 .subtitle {
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-size: clamp(1rem, 3vw, 1.4rem);
   color: #64748b;
-  margin-bottom: 3rem;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 2rem;
   line-height: 1.5;
+  padding: 0 1rem;
 }
 
 .emergencyBanner {
@@ -79,186 +36,73 @@
   top: 0;
   z-index: 10;
   background: rgba(255, 255, 255, 0.95);
-  padding: 1rem;
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0.75rem;
+  width: 100%;
 }
 
 .emergencyToggle {
-  background: none;
-  border: 2px solid #e74c3c;
-  color: #e74c3c;
-  padding: 0.75rem 1.5rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-}
-
-.emergencyToggle:hover {
-  background: #e74c3c;
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15);
-}
-
-.emergencyIcon {
-  font-size: 1.2rem;
-}
-
-.emergencyInfo {
-  margin-top: 1rem;
-  padding: 1.5rem;
-  background: #fff5f5;
-  border-radius: 12px;
-  animation: slideDown 0.3s ease;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 6px rgba(231, 76, 60, 0.1);
-}
-
-.emergencyInfo h3 {
-  color: #e74c3c;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-}
-
-.emergencyInfo p {
-  color: #666;
-  margin-bottom: 0.5rem;
-}
-
-.emergencyInfo a {
-  color: #e74c3c;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.emergencyInfo a:hover {
-  text-decoration: underline;
+  width: 100%;
+  max-width: 300px;
+  justify-content: center;
+  padding: 0.75rem;
+  font-size: 0.9rem;
 }
 
 .ctaContainer {
-  margin: 2rem 0 4rem;
+  margin: 2rem 1rem;
 }
 
 .cta {
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
-  border: none;
-  padding: clamp(1rem, 2.5vw, 1.25rem) clamp(2rem, 5vw, 3rem);
-  border-radius: 50px;
-  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
-}
-
-.ctaHovered {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.25);
-  background: linear-gradient(135deg, #2980b9, #2573a7);
-}
-
-.ctaSubtext {
-  color: #64748b;
-  font-size: 0.95rem;
-  margin-top: 1rem;
-  animation: fadeIn 0.8s ease 0.4s backwards;
+  width: 100%;
+  max-width: 300px;
+  padding: 1rem;
+  font-size: 1.1rem;
 }
 
 .socialProof {
-  display: flex;
-  justify-content: center;
-  gap: clamp(2rem, 5vw, 4rem);
-  margin-top: auto;
-  padding-top: 4rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .statItem {
-  text-align: center;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  transition: all 0.3s ease;
-  animation: fadeIn 0.8s ease 0.6s backwards;
+  padding: 1.25rem;
+  width: 100%;
 }
 
-.statItem:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-}
-
-.statNumber {
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  font-weight: 700;
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-}
-
-.statLabel {
-  color: #64748b;
-  font-size: clamp(0.875rem, 2vw, 1rem);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 768px) {
+/* Tablet and up */
+@media (min-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 2rem;
   }
 
   .hero {
-    margin: 2rem 0;
-  }
-
-  .emergencyBanner {
-    padding: 0.75rem;
+    margin: 4rem 0;
   }
 
   .emergencyToggle {
-    width: 100%;
-    justify-content: center;
+    width: auto;
   }
 
   .socialProof {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding-top: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container {
+    padding: 3rem 4rem;
   }
 
-  .statItem {
-    width: 100%;
-    max-width: 300px;
+  .hero {
+    margin: 6rem 0;
+  }
+
+  .cta {
+    padding: 1.25rem 3rem;
   }
 } 

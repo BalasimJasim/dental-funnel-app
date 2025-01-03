@@ -8,16 +8,6 @@
   overflow-x: hidden;
 }
 
-.app::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(90deg, #3498db, #2ecc71);
-}
-
 @media (max-width: 768px) {
   .app {
     padding: 0;
