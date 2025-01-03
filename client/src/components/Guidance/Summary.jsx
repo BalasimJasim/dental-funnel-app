@@ -290,31 +290,37 @@ const Summary = ({ answers, onConfirm, onBack }) => {
         <h1 className={styles.title}>Ваш Персональний План Лікування</h1>
 
         <div className={styles.recommendation}>
-          <h2>{recommendation.title}</h2>
-          <p className={styles.description}>{recommendation.description}</p>
+          <h2>{recommendation?.title}</h2>
+          <p className={styles.description}>{recommendation?.description}</p>
 
-          <div className={styles.benefits}>
-            <h3>Переваги обраного рішення:</h3>
-            <ul>
-              {recommendation.benefits.map((benefit, index) => (
-                <li key={index}>{benefit}</li>
-              ))}
-            </ul>
-          </div>
+          {recommendation?.benefits && (
+            <div className={styles.benefits}>
+              <h3>Переваги обраного рішення:</h3>
+              <ul>
+                {recommendation.benefits.map((benefit, index) => (
+                  <li key={index}>{benefit}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-          <div className={styles.timeline}>
-            <h3>Терміни лікування</h3>
-            <p>{recommendation.timeline}</p>
-          </div>
+          {recommendation?.timeline && (
+            <div className={styles.timeline}>
+              <h3>Терміни лікування</h3>
+              <p>{recommendation.timeline}</p>
+            </div>
+          )}
 
-          <div className={styles.nextSteps}>
-            <h3>План лікування:</h3>
-            <ol>
-              {recommendation.steps.map((step, index) => (
-                <li key={index}>{step}</li>
-              ))}
-            </ol>
-          </div>
+          {recommendation?.steps && (
+            <div className={styles.nextSteps}>
+              <h3>План лікування:</h3>
+              <ol>
+                {recommendation.steps.map((step, index) => (
+                  <li key={index}>{step}</li>
+                ))}
+              </ol>
+            </div>
+          )}
         </div>
 
         <button onClick={onConfirm} className={styles.confirmButton}>
