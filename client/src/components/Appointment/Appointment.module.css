@@ -1,120 +1,63 @@
 .container {
-  max-width: 800px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .title {
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .backButton {
-  padding: 0.5rem 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 6px;
-  background: transparent;
-  color: #4a5568;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.backButton:hover {
-  border-color: #4299e1;
-  color: #4299e1;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
 }
 
 .form {
-  display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .formGroup {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .formGroup label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #4a5568;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
 }
 
 .formGroup input,
 .formGroup select {
-  width: 100%;
   padding: 0.75rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
-.formGroup input:focus,
-.formGroup select:focus {
-  outline: none;
-  border-color: #4299e1;
-}
-
-.assessment {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-.assessment h3 {
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-}
-
-.assessment p {
-  color: #666;
-}
-
-.error {
-  background: #fee2e2;
-  color: #dc2626;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.submitButton {
-  width: 100%;
-  padding: 1rem;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.submitButton:hover:not(:disabled) {
-  background-color: #2980b9;
-}
-
-.submitButton:disabled {
-  background-color: #94a3b8;
-  cursor: not-allowed;
-}
-
-@media (max-width: 480px) {
+/* Tablet and up */
+@media (min-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 2rem;
   }
 
   .backButton {
-    width: 100%;
-    margin-bottom: 1rem;
+    width: auto;
   }
 
-  .assessment {
-    padding: 0.75rem;
+  .form {
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container {
+    padding: 3rem;
   }
 } 

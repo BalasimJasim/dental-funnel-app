@@ -35,6 +35,11 @@ function App({ isStandalone = true }) {
     }
   };
 
+  const handleReset = () => {
+    setCurrentStep("landing");
+    setAssessmentAnswers({});
+  };
+
   return (
     <Layout isStandalone={isStandalone}>
       <div className={styles.app} data-env={import.meta.env.MODE}>
@@ -48,6 +53,7 @@ function App({ isStandalone = true }) {
           <Appointment
             assessmentAnswers={assessmentAnswers}
             onBack={handleBack}
+            onComplete={handleReset}
           />
         )}
       </div>

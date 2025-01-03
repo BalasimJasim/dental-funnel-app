@@ -16,7 +16,7 @@ const TREATMENTS = {
   prevention: "Профілактичний огляд",
 };
 
-const Appointment = ({ onBack, assessmentAnswers }) => {
+const Appointment = ({ onBack, onComplete, assessmentAnswers }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [formData, setFormData] = useState({
@@ -280,7 +280,7 @@ const Appointment = ({ onBack, assessmentAnswers }) => {
           appointmentDetails={appointmentDetails}
           onClose={() => {
             setShowSuccessModal(false);
-            onBack();
+            onComplete();
           }}
         />
       )}
@@ -290,6 +290,7 @@ const Appointment = ({ onBack, assessmentAnswers }) => {
 
 Appointment.propTypes = {
   onBack: PropTypes.func.isRequired,
+  onComplete: PropTypes.func.isRequired,
   assessmentAnswers: PropTypes.objectOf(PropTypes.string),
 };
 

@@ -4,6 +4,15 @@ import styles from "./SuccessModal.module.css";
 const SuccessModal = ({ onClose, appointmentDetails }) => {
   const { date, time, service = "Консультація" } = appointmentDetails;
 
+  const handleClose = () => {
+    const modal = document.querySelector(`.${styles.modal}`);
+    modal.classList.add(styles.fadeOut);
+
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  };
+
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -25,8 +34,8 @@ const SuccessModal = ({ onClose, appointmentDetails }) => {
           адміністратора.
         </p>
         <div className={styles.actions}>
-          <button onClick={onClose} className={styles.button}>
-            Зрозуміло
+          <button onClick={handleClose} className={styles.button}>
+            Повернутися на головну
           </button>
         </div>
       </div>
